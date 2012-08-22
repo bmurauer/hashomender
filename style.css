@@ -1,0 +1,181 @@
+body{
+	background: #444;
+}
+.content{
+	width: 470px;
+	float:left;
+}
+.caption{
+	font-family: "courier";
+	font-size: 30px;
+	text-align: center;
+	color: #888;
+}
+#submit{
+	float:right;
+	margin-right: 20px;
+	margin-top: 4px;
+}
+.button {
+	background-color:#222;
+	border: 2px solid #888;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	display:inline-block;
+	color:#888;
+	font-family:arial;
+	font-size:15px;
+	font-weight:normal;
+	padding:0px 2px;
+	text-decoration:none;
+}.button:hover {
+	border: 2px solid #f80;
+}.button:active {
+	position:relative;
+	top:1px;
+}
+
+.wrapper {
+	min-height: 400px;
+}
+
+.wrapper, .wrapper-start{
+	padding: 10px;
+	margin-left:auto;
+	margin-right: auto;
+	background: #444;
+	color: #aaa;
+	width: 700px;
+	overflow:hidden;
+	background: #222;
+	font-family: "helvetica";
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+}
+.wrapper-start{
+	width: 500px;
+}
+
+h2{
+	font-size: 20px;
+}
+textarea, textarea:focus{
+	background: #888;
+	font-family:"Helvetica";
+	padding: 5px;
+	font-size: 20pt;
+	width: 450px;
+  height: 300px;
+	resize: none;
+	border: solid 2px #444;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+#list, #list:focus{
+  padding-left: 5px;
+  height: 296px;
+	border: solid 2px #444;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+textarea:focus, #list:focus, #submit:focus{
+	border: solid 2px #f80;
+}
+
+
+hr{
+	border: solid 1px #f80;
+}
+
+.counter{
+	float: left;
+	margin-top: 4px;
+}
+.taglist{
+	overflow: hidden;
+}
+
+.tag{
+	font-size: 12pt;
+	cursor: pointer;
+}
+.tag:hover {
+	font-size: 18pt;
+}
+.tag-disabled {
+	color: #444;
+	font-size: 10pt;
+}
+.username{
+	font-family: Courier;
+	font-size: 16pt;}
+a{
+	color: #f80;
+	text-decoration: none;
+}
+	
+.username a: hover{
+	text-decoration: underline;
+}
+.center{
+	text-align: center;
+	}
+	
+.ui-state-hover{
+	background: #fff;
+}
+
+.error{
+	color: red;
+}
+
+.disabled{
+	color: #2f2f2f;
+	border-color: #2f2f2f;
+}
+
+.ui-corner-all{
+	font-family:"Helvetica";
+	font-size: 16pt;
+	
+}
+
+.ui-autocomplete{
+	border: 2px solid #f80;
+	max-width: 150px;
+	background: #444;
+}
+
+.selected{
+	color: #f80;
+	font-size: 20pt;
+}
+
+.unselected:hover{
+	color: #f80;
+	font-size: 20pt;
+	cursor: pointer;
+}
+#timeline{
+	position: absolute;
+	left: 10px;
+	top: 140px;
+}
+.past-tweet {
+	width: 230px;
+	background: #222;
+	border-radius: 5px;
+	margin: 3px;
+	padding: 4px;
+	color: #aaa;
+	font-family: helvetica;
+	float: left;
+	clear: left;
+}
+.date{
+	color: #777;
+	font-size: 8pt;
+	margin-bottom: 5px;
+}
