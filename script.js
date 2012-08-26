@@ -8,12 +8,6 @@ var selection = 0;
 // list of currently recommended tags
 var tagList;
 
-// elements that might get focus
-var focusListeners = {"listeners":[
-	{"selector":"#text"},
-	{"selector":"#list"},
-	{"selector":"#submit"}
-]};
 
 new function($) {
 	$.fn.setCursorPosition = function(pos) {
@@ -35,6 +29,10 @@ function setEventHandlers(){
 		var pos = $('#text').val().length;
 		$('#text').setCursorPosition(pos);
 	});
+	$('#text').blur(function(){
+		//selection = 1;
+		//drawList();
+	});
 	$('#list').focus(function(){
 		if(!tagList || tagList.length < 1){
 			$('#submit').focus();
@@ -43,21 +41,25 @@ function setEventHandlers(){
 		selection = 1;
 		drawList();
 	});
+	$('#list').mouseenter(function(){
+		//console.log('#list mouseenter fired');
+		//selection = 0;
+		//drawList();
+	});
 	$('#list').blur(function(){
-		selection = 0;
-		drawList();
+		//selection = 0;
+		//drawList();
 	});
 	$('#submit').blur(function(){
-		$('#text').focus();
-	});
-	$('#list li.unselected').click(function(){
-		console.log("bla");
-	});
-	$('h1').click(function(){
-		console.log("blabb");
+		//$('#text').focus();
 	});
 }
 
+function keyDownHandler(e){
+	if(e.which == 40 || e.which == 38){
+		e.preventDefault();	
+	}
+}
 
 function keyHandler(e){
 	if($('*:focus').attr("id") == "list"){
@@ -65,16 +67,17 @@ function keyHandler(e){
 			selection ++;
 			if(selection > tagList.length)
 				selection -= tagList.length;
-			drawList();
+			$('.li').mouseout();
 		} else if (e.which == 38){ // UP
 			selection --;
 			if(selection <= 0)
 				selection += tagList.length;
-			drawList();
+			$('.li').mouseout();
 		}	else if (e.which == 13){ // RETURN insert tag
 			var tag = tagList[selection-1];
 			insertTagIntoText(tag);
 		}
+		drawList();
 	} else {
 		findRecommendedHashtags();
 	}
@@ -107,10 +110,7 @@ function insertTagIntoText(tag){
 		new_tweet += tag;
 	}
 	$('#text').val(new_tweet);
-	selection = 0;
-	drawList();
 	calcLength();
-	$('#text').focus();
 	findRecommendedHashtags();
 }
 
@@ -123,6 +123,13 @@ function drawList(){
 			$('#list').append('<li class="selected">'+tagList[i]+'</li>');
 		}
 	}
+
+	// this handler hast to be installed every time
+	$('li').mousedown(function(){
+		var tag = $(this).html();
+		$('#list').html('');
+		insertTagIntoText(tag);
+	});
 }
 
 function findRecommendedHashtags() {
@@ -185,6 +192,8 @@ function findRecommendedHashtags() {
 		for(var i=0;i<msg.length;i++){
 			tagList.push(msg[i]);
 		}
+		selection = 0;
+		$('#text').focus();
 		drawList();
 	});
 }

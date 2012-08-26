@@ -31,9 +31,10 @@
 		</div>
 	</body>
 	<script type="text/javascript">
+		$(document).bind("keydown", keyDownHandler);
 		$(document).bind("keyup", keyHandler);
 		setEventHandlers();
-		keyHandler();
+		findRecommendedHashtags();
 		getTimeline();
 	</script>
 </html>
