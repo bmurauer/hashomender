@@ -25,6 +25,8 @@
 				<h2>Tags recommended</h2>
 				<div id="list" tabindex="2">
 				</div>
+				<div id="dic-list" tabindex="4" style="display: none;">
+				</div>
 			</div>
 		</div>
 		<div id="timeline">

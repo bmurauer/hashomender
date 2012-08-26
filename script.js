@@ -1,5 +1,4 @@
 
-// TODO: double spaces won't work for recommendation
 // TODO: jquery's autocomplete is a mess
 
 // currently selected recomended hashtag
@@ -29,10 +28,6 @@ function setEventHandlers(){
 		var pos = $('#text').val().length;
 		$('#text').setCursorPosition(pos);
 	});
-	$('#text').blur(function(){
-		//selection = 1;
-		//drawList();
-	});
 	$('#list').focus(function(){
 		if(!tagList || tagList.length < 1){
 			$('#submit').focus();
@@ -41,17 +36,9 @@ function setEventHandlers(){
 		selection = 1;
 		drawList();
 	});
-	$('#list').mouseenter(function(){
-		//console.log('#list mouseenter fired');
-		//selection = 0;
-		//drawList();
-	});
 	$('#list').blur(function(){
-		//selection = 0;
-		//drawList();
-	});
-	$('#submit').blur(function(){
-		//$('#text').focus();
+		selection = 0;
+		drawList();
 	});
 }
 
@@ -62,23 +49,22 @@ function keyDownHandler(e){
 }
 
 function keyHandler(e){
-	if($('*:focus').attr("id") == "list"){
+	var id = $('*:focus').attr("id");
+	if(id == 'list' || id == "dic-list"){
 		if (e.which == 40){ // DOWN, move in tag list
 			selection ++;
 			if(selection > tagList.length)
 				selection -= tagList.length;
-			$('.li').mouseout();
 		} else if (e.which == 38){ // UP
 			selection --;
 			if(selection <= 0)
 				selection += tagList.length;
-			$('.li').mouseout();
 		}	else if (e.which == 13){ // RETURN insert tag
 			var tag = tagList[selection-1];
 			insertTagIntoText(tag);
 		}
 		drawList();
-	} else {
+	} else if (e.which != 9){
 		findRecommendedHashtags();
 	}
 }
@@ -114,6 +100,10 @@ function insertTagIntoText(tag){
 	findRecommendedHashtags();
 }
 
+function completeTag(tag){
+
+}
+
 function drawList(){
 	$('#list').html("");
 	for(var i=0;i<tagList.length;i++){
@@ -143,6 +133,10 @@ function findRecommendedHashtags() {
 	// is being used, just a plain dictionary-style autocompletion.
 
 	if(lastw.charAt(0) == '#' && lastw.length > 3){
+/*
+		$('#list').slideUp(400);
+		$('#dic-list').slideDown(400);
+*/
 		var hashReq = $.ajax({
 			url: "tags.php",
 			type: "POST",
@@ -150,34 +144,22 @@ function findRecommendedHashtags() {
 		});
 		
 		hashReq.done(function(msg){
-			$( "#text" ).autocomplete({
-				minLength: 0,
-				source: function( request, response ) {
-					// delegate back to autocomplete, but extract the last term
-					response( $.ui.autocomplete.filter(
-						msg, extractLast( request.term ) ) );
-				},
-				focus: function() {
-					// prevent value inserted on focus
-					return false;
-				},
-				select: function( event, ui ) {
-					var terms = split( this.value );
-					// remove the current input
-					terms.pop();
-					// add the selected item
-					terms.push( ui.item.value );
-					// add placeholder to get the space at the end
-					terms.push( "" );
-					this.value = terms.join( " " );
-					return false;
-				}
+/*
+			$('#dic-list').html('');
+			$('#dic-list').append('<li class="selected">'+msg[0]+'</li>');
+			for(var i=1;i<msg.length;i++){
+				$('#dic-list').append('<li>'+msg[i]+'</li>');
+			}
+			$('#text').keyup(function(e){
+				if(e.which == 13){
+					alert('custom switch successfully installed');
+				}				
 			});
+*/
 		});
 	}
 
 	// Following lines are for the actual recommendation.
-
 	var httpReq = $.ajax({
 		url: "recommend.php",
 		type: "POST",
