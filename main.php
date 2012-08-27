@@ -27,6 +27,7 @@
 				</div>
 				<div id="dic-list" tabindex="4" style="display: none;">
 				</div>
+				<input id="hidden-text" type="text" style="display: block;"/>
 			</div>
 		</div>
 		<div id="timeline">
@@ -34,7 +35,8 @@
 	</body>
 	<script type="text/javascript">
 		$(document).bind("keydown", keyDownHandler);
-		$(document).bind("keyup", keyHandler);
+		$('#text').bind("keyup", findRecommendedHashtags);
+		$('#list').bind("keyup", keyHandler);
 		setEventHandlers();
 		findRecommendedHashtags();
 		getTimeline();

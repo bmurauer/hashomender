@@ -49,52 +49,61 @@ function keyDownHandler(e){
 }
 
 function keyHandler(e){
-	var id = $('*:focus').attr("id");
-	if(id == 'list' || id == "dic-list"){
-		if (e.which == 40){ // DOWN, move in tag list
-			selection ++;
-			if(selection > tagList.length)
-				selection -= tagList.length;
-		} else if (e.which == 38){ // UP
-			selection --;
-			if(selection <= 0)
-				selection += tagList.length;
-		}	else if (e.which == 13){ // RETURN insert tag
-			var tag = tagList[selection-1];
-			insertTagIntoText(tag);
-		}
-		drawList();
-	} else if (e.which != 9){
-		findRecommendedHashtags();
+	if (e.which == 40){ // DOWN, move in tag list
+		selection ++;
+		if(selection > tagList.length)
+			selection -= tagList.length;
+	} else if (e.which == 38){ // UP
+		selection --;
+		if(selection <= 0)
+			selection += tagList.length;
+	}	else if (e.which == 13){ // RETURN insert tag
+		var tag = tagList[selection-1];
+		insertTagIntoText(tag);
 	}
+	drawList();
+}
+
+function removeLastWord(text){
+	var index = text.lastIndexOf(" ");
+	return text.substring(0, index);
 }
 
 function insertTagIntoText(tag){
 	var old_tweet = $('#text').val();
-	// this value will be -1 if the tag is not contained in the text.
-	// search here is case insensitive and ignores the hash symbol
-	var tag_position = old_tweet.toLowerCase().indexOf(tag.substring(1).toLowerCase());
-	var tag_length = tag.length;
-	var new_tweet = "";
-	
-	// the tag is already contained in the tweet, with a hashtag.
-	if( old_tweet.toLowerCase().indexOf(tag.toLowerCase()) !== -1){
-		new_tweet = old_tweet;
-	// tag was found in text, replace it with the one from the server,
-	// including the hashtag
-	} else if( tag_position !== -1){
-		new_tweet = old_tweet.substring(0, tag_position);
-		new_tweet += tag + " ";
-		new_tweet += old_tweet.substring(tag_position + tag_length);
-	// tag was not found, append it to tweet
+
+	// check if we are inserting a recommendation or an autocompletion. in the
+	// latter case, we should complete the word rather than replace it
+	var lastw = lastWord(old_tweet);
+	if(lastw.charAt(0) == '#'){
+		var new_tweet = removeLastWord(old_tweet) + ' ' + tag;
 	} else {
-		new_tweet = old_tweet;
-		var length = old_tweet.length;
-		if(old_tweet.charAt(length-1) != ' '){
-			new_tweet += ' ';
-		} 
-		new_tweet += tag;
-	}
+		// this value will be -1 if the tag is not contained in the text.
+		// search here is case insensitive and ignores the hash symbol
+		var tag_position = old_tweet.toLowerCase().indexOf(tag.substring(1)
+			.toLowerCase());
+		var tag_length = tag.length;
+		var new_tweet = "";
+	
+		// the tag is already contained in the tweet, with a hashtag.
+		if( old_tweet.toLowerCase().indexOf(tag.toLowerCase()) !== -1){
+			new_tweet = old_tweet;
+		// tag was found in text, replace it with the one from the server,
+		// including the hashtag
+		} else if( tag_position !== -1){
+			new_tweet = old_tweet.substring(0, tag_position);
+			new_tweet += tag + " ";
+			new_tweet += old_tweet.substring(tag_position + tag_length);
+		// tag was not found, append it to tweet
+		} else {
+			new_tweet = old_tweet;
+			var length = old_tweet.length;
+			if(old_tweet.charAt(length-1) != ' '){
+				new_tweet += ' ';
+			} 
+			new_tweet += tag;
+		}
+	}	
 	$('#text').val(new_tweet);
 	calcLength();
 	findRecommendedHashtags();
@@ -122,21 +131,22 @@ function drawList(){
 	});
 }
 
-function findRecommendedHashtags() {
+function findRecommendedHashtags(e) {
+	if(e.which < 41){
+		return;
+	}
 	var val = $("#text").val();
 	calcLength(val);
 	var lastw = lastWord(val);
 
 	// following lines check if the user is currently typing a 
 	// hashtag. after 3 symbols, the system collects all hashtags with the same
-	// letters already typed and displays them to the user. Here, no recommendation
-	// is being used, just a plain dictionary-style autocompletion.
+	// letters already typed and displays them to the user. Here, no
+	// recommendation is being used, just a plain dictionary-style
+	// autocompletion.
 
 	if(lastw.charAt(0) == '#' && lastw.length > 3){
-/*
-		$('#list').slideUp(400);
-		$('#dic-list').slideDown(400);
-*/
+
 		var hashReq = $.ajax({
 			url: "tags.php",
 			type: "POST",
@@ -144,40 +154,39 @@ function findRecommendedHashtags() {
 		});
 		
 		hashReq.done(function(msg){
-/*
-			$('#dic-list').html('');
-			$('#dic-list').append('<li class="selected">'+msg[0]+'</li>');
-			for(var i=1;i<msg.length;i++){
-				$('#dic-list').append('<li>'+msg[i]+'</li>');
+			tagList = [];
+		
+			// print all items into list
+			for(var i=0;i<msg.length;i++){
+				tagList.push(msg[i]);
 			}
-			$('#text').keyup(function(e){
-				if(e.which == 13){
-					alert('custom switch successfully installed');
-				}				
-			});
-*/
+			selection = 0;
+			$('#text').focus();
+			drawList();
+		});
+	} else {
+		$('#hidden-text').val('');
+		// Following lines are for the actual recommendation.
+		var httpReq = $.ajax({
+			url: "recommend.php",
+			type: "POST",
+			data: {msg: val}
+		});
+
+		httpReq.done(function(msg){
+			// clear old entries
+			tagList = [];
+		
+			// print all items into list
+			for(var i=0;i<msg.length;i++){
+				tagList.push(msg[i]);
+			}
+			selection = 0;
+			$('#text').focus();
+			drawList();
 		});
 	}
 
-	// Following lines are for the actual recommendation.
-	var httpReq = $.ajax({
-		url: "recommend.php",
-		type: "POST",
-		data: {msg: val}
-	});
-
-	httpReq.done(function(msg){
-		// clear old entries
-		tagList = [];
-		
-		// print all items into list
-		for(var i=0;i<msg.length;i++){
-			tagList.push(msg[i]);
-		}
-		selection = 0;
-		$('#text').focus();
-		drawList();
-	});
 }
 
 function calcLength(val) {
@@ -188,12 +197,14 @@ function calcLength(val) {
 		$("#counter").addClass("error");
 		$("#submit").attr("disabled", true);
 		$("#submit").addClass("disabled");
-		$("#counter").html((remaining* -1)+" characters too much! ("+result.length+" of 140)");
+		$("#counter").html((remaining* -1)+" characters too much! ("
+			+result.length+" of 140)");
 	} else {
 		$("#counter").removeClass("error");
 		$("#submit").attr("disabled", false);
 		$("#submit").removeClass("disabled");
-		$("#counter").html(remaining+" characters remaining ("+result.length+" of 140)");
+		$("#counter").html(remaining+" characters remaining ("
+			+result.length+" of 140)");
 	}
 }
 
@@ -218,7 +229,8 @@ function checkAndSend(){
 			drawList();
 			setTimeout("getTimeline()", 3000);
 		} else {
-			$('#error').val('There has been some trouble tweeting your message!');
+			$('#error')
+				.val('There has been some trouble tweeting your message!');
 		}
 	});
 }
