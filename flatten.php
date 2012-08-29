@@ -1,4 +1,11 @@
 <?php
+	/**
+	 * This file flattens the hierarchical tweet json file delivered by the 
+	 * mongoDB database. Flat structure is needed for SOLR, which can't handle
+	 * hierarchies in its index.
+	 */
+	
+	// limits the output
 	$limit = 10;
 	$fp = fopen("tweets/tweets_small.json", "r") or die("Could not open file");
 	$re = fopen("tweets/result.xml", "w") or die("Could not open result file");
@@ -15,7 +22,7 @@
 				$output['hashtags'] .= $tag->text." ";
 			}
 			$output['hashtags'] = trim($output['hashtags']);
-			fputs($re,json_encode($output);
+			fputs($re,json_encode($output));
 			$id++;
 		}
 		fseek($re, -1, SEEK_CUR);
