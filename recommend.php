@@ -38,11 +38,14 @@
 		// removes words that already are hashtags
 		$filtered = array();
 		foreach($array as $word){
-		  if(substr($word, 0, 1) === '#'){
-		    $filtered[] = substr($word, 1);      
-		  } else {
-		    $filtered[] = $word;
-		  }
+			if(trim($word) == ""){
+				continue;
+			}
+			if(substr($word, 0, 1) === '#'){
+				$filtered[] = substr($word, 1);			
+			} else {
+				$filtered[] = $word;
+			}
 		}
 		
 		$query = '';
@@ -66,12 +69,12 @@
 	function extract_tags($tweets){
 		$tags = array();
 		if(isset($tweets->grouped->hashtags->groups)){
-		  foreach($tweets->grouped->hashtags->groups as $tag_group){
-			  $tags_combined = explode(" ",$tag_group->groupValue);
-			  foreach($tags_combined as $tag){			  
-			    $tags[] = '#'.$tag;
-			  }
-		  }
+			foreach($tweets->grouped->hashtags->groups as $tag_group){
+				$tags_combined = explode(" ",$tag_group->groupValue);
+				foreach($tags_combined as $tag){				
+					$tags[] = '#'.$tag;
+				}
+			}
 		}
 		return $tags;
 	}

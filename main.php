@@ -11,7 +11,7 @@
 			<div class="caption">
 				<h1>Hash-O-Mender</h1>
 		<div class="username">logged in as: <?php echo $user->screen_name;?>|<a href="logout.php" tabindex="-2">logout</a></div>
-				
+				<div id="char"></div>
 			</div>
 		
 		<div class="wrapper">
@@ -25,9 +25,6 @@
 				<h2>Tags recommended</h2>
 				<div id="list" tabindex="2">
 				</div>
-				<div id="dic-list" tabindex="4" style="display: none;">
-				</div>
-				<input id="hidden-text" type="text" style="display: block;"/>
 			</div>
 		</div>
 		<div id="timeline">

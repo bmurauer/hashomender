@@ -4,7 +4,7 @@
   $pool_size = 20;
   $timeout = 10;
   $fetch_size = 20;
-  $word = $_POST['lastWord'];
+  $word = strtolower($_POST['lastWord']);
   
   for($i = 0; $i<$timeout; $i++){
     $req = new HttpRequest(
@@ -26,7 +26,7 @@
   $tag_pool = array_splice($tag_pool, 0, $pool_size);
 
 /**/
-  header('Cache-Control: no-cache, must-revalidate');
+    header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-type: application/json');
 /**/

@@ -1,12 +1,15 @@
-
-// TODO: jquery's autocomplete is a mess
-
 // currently selected recomended hashtag
 var selection = 0;
 
 // list of currently recommended tags
 var tagList;
 
+var ignoredKeycodes = [
+	38, // DOWN
+	40, // UP
+	13, // ENTER
+	9,  // TAB
+];
 
 new function($) {
 	$.fn.setCursorPosition = function(pos) {
@@ -65,7 +68,7 @@ function keyHandler(e){
 }
 
 function removeLastWord(text){
-	var index = text.lastIndexOf(" ");
+	var index = text.lastIndexOf("#");
 	return text.substring(0, index);
 }
 
@@ -76,7 +79,7 @@ function insertTagIntoText(tag){
 	// latter case, we should complete the word rather than replace it
 	var lastw = lastWord(old_tweet);
 	if(lastw.charAt(0) == '#'){
-		var new_tweet = removeLastWord(old_tweet) + ' ' + tag;
+		var new_tweet = removeLastWord(old_tweet) + tag + ' ';
 	} else {
 		// this value will be -1 if the tag is not contained in the text.
 		// search here is case insensitive and ignores the hash symbol
@@ -101,7 +104,7 @@ function insertTagIntoText(tag){
 			if(old_tweet.charAt(length-1) != ' '){
 				new_tweet += ' ';
 			} 
-			new_tweet += tag;
+			new_tweet += tag + " ";
 		}
 	}	
 	$('#text').val(new_tweet);
@@ -132,8 +135,8 @@ function drawList(){
 }
 
 function findRecommendedHashtags(e) {
-	if(e.which < 41){
-		return;
+	if(e && ignoredKeycodes.indexOf(e.which) != -1){
+		return;	
 	}
 	var val = $("#text").val();
 	calcLength(val);
@@ -145,7 +148,8 @@ function findRecommendedHashtags(e) {
 	// recommendation is being used, just a plain dictionary-style
 	// autocompletion.
 
-	if(lastw.charAt(0) == '#' && lastw.length > 3){
+	if(lastw.charAt(0) == '#' &&
+		lastw.length > 3){
 
 		var hashReq = $.ajax({
 			url: "tags.php",
@@ -209,6 +213,9 @@ function calcLength(val) {
 }
 
 function lastWord(text){
+	if(text.charAt(text.length-1) == " "){
+		return "";
+	}
 	var last = text.trim().lastIndexOf(" ");
 	return text.substring(last).trim();
 }

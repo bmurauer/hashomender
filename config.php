@@ -23,5 +23,5 @@
 	/**
 	 * The max amount of tweets appearing in the timeline on the left
 	 */
-	$timeline_max_count = 10;
+	$timeline_max_count = 5;
 ?>
