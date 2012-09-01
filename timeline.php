@@ -22,7 +22,7 @@
 
 	$timeline = $Twitter->get_statusesUser_timeline(array(
 		"screen_name"=>$user->screen_name,
-		"count" => $timeline_max_count));
+		"count" => TIMELINE_LIMIT));
 	$response = array();
 	
 	foreach($timeline->response as $tweet){
