@@ -13,16 +13,16 @@
 
 	// retrieve the tweets from the solr server
 
-	$tweets = get_tweets($msg, $tweet_limit, $solr_url);
+	$tweets = get_tweets($msg);
 
 	// extract the tags from the tweets
 	$tags = extract_tags($tweets);
 	
 	// rank the tags according to solr score and # of occurrances
-	$tags = rank_tags($tags);
+	$tags_ranked = rank_tags($tags);
 
 	// we just need some tags, cut off the rest
-	$filtered_tags = filter($tags, $tag_limit);
+	$filtered_tags = filter($tags_ranked);
 
 	// print back result
 	print(json_encode($filtered_tags));	
@@ -32,7 +32,7 @@
 	// MAIN FUNCTIONS
 	
 	// retrieves the tweets from SOLR
-	function get_tweets($msg, $tweet_limit, $solr_url){
+	function get_tweets($msg){
 		$array = explode(" ",$msg);
 		
 		// removes words that already are hashtags
@@ -59,7 +59,8 @@
 			}
 			$i++;
 		}
-		$req = new HttpRequest($solr_url.'?q='.$query.'&rows='.$tweet_limit.'&fl=score&group=true&group.field=hashtags&wt=json&indent=true', HTTP_METH_POST);
+		$req = new HttpRequest(SOLR_URL.'?q='.$query.'&rows='.TWEET_LIMIT.'&fl=score&wt=json&indent=true', HTTP_METH_POST);
+		// &group=true&group.field=hashtags
 		$result = json_decode($req->send()->getBody());
 
 		return $result;
@@ -68,11 +69,16 @@
 	// extracts the hashtags from a set of tweets
 	function extract_tags($tweets){
 		$tags = array();
-		if(isset($tweets->grouped->hashtags->groups)){
-			foreach($tweets->grouped->hashtags->groups as $tag_group){
-				$tags_combined = explode(" ",$tag_group->groupValue);
-				foreach($tags_combined as $tag){				
-					$tags[] = '#'.$tag;
+		if(isset($tweets->response->docs))
+		foreach($tweets->response->docs as $tweet){
+			$score = $tweet->score;
+			foreach(explode(" ", $tweet->hashtags) as $tag){
+				if(!isset($tags[$tag])){
+					$tags[$tag] = array('count' => 1, 'maxScore' => $score);
+				} else {
+					$tags[$tag]['count']++;
+					$old = $tags[$tag]['maxScore'];
+					$tags[$tag]['maxScore'] = max(array($old, $score));
 				}
 			}
 		}
@@ -81,11 +87,18 @@
 	
 	// ranks the tweets according to Score and Hashtag Count
 	function rank_tags($tags){
-		return $tags;
+		$sorted = array();
+		foreach($tags as $tag => $values){
+			$total_score = FACTOR_COUNT * $values['count'] + 
+				FACTOR_SCORE * $values['maxScore'];
+			$sorted[$tag] = $total_score;
+		}
+		arsort($sorted);
+		return $sorted;
 	}
 	
 	// applies a filter (e.g. limit the set size)
-	function filter($tags, $tag_limit){
-		return array_slice($tags, 0, $tag_limit);
+	function filter($tags){
+		return array_slice($tags, 0, TAG_LIMIT);
 	}
 ?>

@@ -2,5 +2,8 @@ this was needed to allow apache to make connections to database servers.
 apache -> setsebool -P httpd_can_network_connect 1
 
 the module http.so was installed to get the php server to send http requests to the local solr
+yum install php5-curl curl-devel 
+pecl install pecl_http
+
 
 the module mongo.so was needed so php could work with the mongodb

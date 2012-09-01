@@ -169,7 +169,6 @@ function findRecommendedHashtags(e) {
 			drawList();
 		});
 	} else {
-		$('#hidden-text').val('');
 		// Following lines are for the actual recommendation.
 		var httpReq = $.ajax({
 			url: "recommend.php",
@@ -182,8 +181,8 @@ function findRecommendedHashtags(e) {
 			tagList = [];
 		
 			// print all items into list
-			for(var i=0;i<msg.length;i++){
-				tagList.push(msg[i]);
+			for(var key in msg){
+				tagList.push("#"+key+" ("+msg[key]+")");
 			}
 			selection = 0;
 			$('#text').focus();
