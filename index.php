@@ -4,6 +4,8 @@ require_once 'EpiCurl.php';
 require_once 'EpiOAuth.php';
 require_once 'EpiTwitter.php';
 
+require_once 'algorithm_checker.php';
+
 $Twitter = new EpiTwitter($consumerKey, $consumerSecret);
 
 
@@ -37,12 +39,7 @@ if(isset($_GET['oauth_token']) || (isset($_COOKIE['oauth_token']) && isset($_COO
 	}
 	$user= $Twitter->get_accountVerify_credentials();
 	// show screen name (not real name)
-	$timeline_twitter = $Twitter->get_statusesUser_timeline(array("screen_name"=>$user->screen_name));
-	$timeline = '<div class="timeline">';
-	foreach($timeline_twitter->response as $tweet){
-		$timeline .= '<div class="past-tweet">'.$tweet['text'].'</div>';
-	}
-	$timeline .= '</div>';
+	
 	include ('main.php');
 	
 } elseif(isset($_GET['denied'])) {

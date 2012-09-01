@@ -165,7 +165,6 @@ function findRecommendedHashtags(e) {
 				tagList.push(msg[i]);
 			}
 			selection = 0;
-			$('#text').focus();
 			drawList();
 		});
 	} else {
@@ -177,12 +176,13 @@ function findRecommendedHashtags(e) {
 		});
 
 		httpReq.done(function(msg){
+			console.log(msg);
 			// clear old entries
 			tagList = [];
 		
 			// print all items into list
-			for(var key in msg){
-				tagList.push("#"+key+" ("+msg[key]+")");
+			for(var i=0;i<msg.length;i++){
+				tagList.push("#"+msg[i]);
 			}
 			selection = 0;
 			$('#text').focus();

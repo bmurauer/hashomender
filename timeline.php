@@ -20,8 +20,7 @@
 	$Twitter->setToken($_COOKIE['oauth_token'],$_COOKIE['oauth_token_secret']);
 	$user= $Twitter->get_accountVerify_credentials();
 
-	$timeline = $Twitter->get_statusesUser_timeline(array(
-		"screen_name"=>$user->screen_name,
+	$timeline = $Twitter->get_statusesHome_timeline(array(
 		"count" => TIMELINE_LIMIT));
 	$response = array();
 	
