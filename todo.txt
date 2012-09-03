@@ -1,0 +1,9 @@
+Fragen:
+
+	Count- der hashtags beachten, welchen score verwenden, wenn mehrere vorhanden sind?
+	API für algorithmen
+	API für MongoDB
+
+Arbeit:
+	
+	Welche Abkürzungen müssen erlärt werden?
