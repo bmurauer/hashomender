@@ -14,7 +14,7 @@
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-type: application/json');
-	
+
 	$Twitter = new EpiTwitter(CONSUMER_KEY, CONSUMER_SECRET);
 	$Twitter->setToken($_COOKIE['oauth_token'],$_COOKIE['oauth_token_secret']);
 	$Twitter->get_accountVerify_credentials();
@@ -24,9 +24,15 @@
 	$response = array();
 	
 	foreach($timeline->response as $tweet){
+		$reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
+		$tweet_result_text = $tweet['text'];
+		if(preg_match($reg_exUrl, $tweet['text'], $url)){
+			$tweet_result_text = preg_replace($reg_exUrl, '<a href="'.$url[0].'">'.$url[0].'</a>', $tweet['text']);
+		}
 		$response[] = array(
-			"text" => $tweet['text'],
-			"date" => $tweet['created_at']);
+			"text" => $tweet_result_text,
+			"date" => $tweet['created_at']
+		);
 	}
 	print(json_encode($response));
 ?>

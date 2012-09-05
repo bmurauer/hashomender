@@ -266,6 +266,7 @@ function getTimeline(){
 	$('#timeline').html('<img src="images/loading.gif"/>');
 	$.post("timeline.php",
 		function(response){
+			console.log(response);
 			$('#timeline').html('<input type="submit" class="button" value="refresh" onclick="getTimeline()" tabindex="-1"/><br>');
 			for(var i=0;i<response.length;i++){
 				$('#timeline').append('<div class="past-tweet"><div class="date">'+response[i].date+'</div>'+response[i].text+'</div>');
