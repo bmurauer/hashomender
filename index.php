@@ -1,12 +1,12 @@
 <?php
-require_once 'keys.php';
-require_once 'EpiCurl.php';
-require_once 'EpiOAuth.php';
-require_once 'EpiTwitter.php';
+require_once 'config.php';
+require_once 'EpiTwitter/EpiCurl.php';
+require_once 'EpiTwitter/EpiOAuth.php';
+require_once 'EpiTwitter/EpiTwitter.php';
 
 require_once 'algorithm_checker.php';
 
-$Twitter = new EpiTwitter($consumerKey, $consumerSecret);
+$Twitter = new EpiTwitter(CONSUMER_KEY, CONSUMER_SECRET);
 
 
 if(isset($_GET['oauth_token']) || (isset($_COOKIE['oauth_token']) && isset($_COOKIE['oauth_token_secret'])))
@@ -39,7 +39,7 @@ if(isset($_GET['oauth_token']) || (isset($_COOKIE['oauth_token']) && isset($_COO
 	}
 	$user= $Twitter->get_accountVerify_credentials();
 	// show screen name (not real name)
-	
+	check_algorithms(TRUE);
 	include ('main.php');
 	
 } elseif(isset($_GET['denied'])) {

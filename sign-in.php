@@ -1,16 +1,16 @@
 <?php
-include 'EpiCurl.php';
-include 'EpiOAuth.php';
-include 'EpiTwitter.php';
-include 'keys.php';
+include_once 'EpiTwitter/EpiCurl.php';
+include_once 'EpiTwitter/EpiOAuth.php';
+include_once 'EpiTwitter/EpiTwitter.php';
+include_once 'config.php';
 
-$Twitter = new EpiTwitter($consumerKey, $consumerSecret);
+$Twitter = new EpiTwitter(CONSUMER_KEY, CONSUMER_SECRET);
 
 ?>
 
 <html>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="stylesheet" type="text/css" href="styles/style.css" />
 	</head>
 	<body>
 	<div class="caption">

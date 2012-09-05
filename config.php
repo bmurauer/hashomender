@@ -3,6 +3,10 @@
 	 * This is the main configuration file.
 	 */
 
+	 define("CONSUMER_KEY", 'FkfCY0lvePEc0pdJtwgA1A');
+	 
+	 define("CONSUMER_SECRET", 'wvEBZg7SjbUM4IbrmMPsiA3TEy1fIMIq8wSEJ8');
+
 	/** 
 	 * the max amount of tweets that the solr-server will return to 
 	 * php. 
@@ -25,6 +29,15 @@
 	 */
 	define("TIMELINE_LIMIT", 5);
 	
+	/**
+	 * The factor the SOLR score will be multiplied with in the default
+	 * algorithm. This is needed for the total score calculation.
+	 */
 	define("FACTOR_SCORE", 0.8);
+	
+	/**
+	 * The factor the tag occurance will be multiplied with in the default
+	 * algorithm. This is needed for the total score calculation.
+	 */
 	define("FACTOR_COUNT", 0.2);
 ?>

@@ -7,8 +7,10 @@
 	
 	// limits the output
 	$limit = 10;
+	// input
 	$fp = fopen("tweets/tweets_small.json", "r") or die("Could not open file");
-	$re = fopen("tweets/result.xml", "w") or die("Could not open result file");
+	// output
+	$re = fopen("tweets/result.xml", "w") or die("Could not write result file");
 	if($fp && $re){
 		fputs($re, "[");
 		$id = 0;
@@ -25,6 +27,8 @@
 			fputs($re,json_encode($output));
 			$id++;
 		}
+		// this removes the last comma from the array => SOLR does not accept 
+		// a trailing comma
 		fseek($re, -1, SEEK_CUR);
 		fputs($re, "]");
 		fclose($fp);

@@ -4,11 +4,16 @@ var selection = 0;
 // list of currently recommended tags
 var tagList;
 
+var mode;
+
+var AUTOCOMPLETE = 0;
+var RECOMMEND = 1;
+
 var ignoredKeycodes = [
-	38, // DOWN
-	40, // UP
-	13, // ENTER
-	9,  // TAB
+38, // DOWN
+40, // UP
+13, // ENTER
+9,  // TAB
 ];
 
 new function($) {
@@ -26,11 +31,12 @@ new function($) {
 }(jQuery);
 
 function setEventHandlers(){
-	$('#text').focus(function(){
+	/*$('#text').focus(function(){
 		// set caret to the end of the tweet
 		var pos = $('#text').val().length;
 		$('#text').setCursorPosition(pos);
 	});
+	*/
 	$('#list').focus(function(){
 		if(!tagList || tagList.length < 1){
 			$('#submit').focus();
@@ -44,27 +50,37 @@ function setEventHandlers(){
 		drawList();
 	});
 }
-
-function keyDownHandler(e){
-	if(e.which == 40 || e.which == 38){
+/**
+ * prevents default functionality of UP, DOWN and RETURN
+ *
+ */
+function preventDefaults(e){
+	if(e.which == 40 || e.which == 38 || e.which == 13){
 		e.preventDefault();	
 	}
-}
+}	
 
 function keyHandler(e){
-	if (e.which == 40){ // DOWN, move in tag list
-		selection ++;
-		if(selection > tagList.length)
-			selection -= tagList.length;
-	} else if (e.which == 38){ // UP
-		selection --;
-		if(selection <= 0)
-			selection += tagList.length;
-	}	else if (e.which == 13){ // RETURN insert tag
-		var tag = tagList[selection-1];
-		insertTagIntoText(tag);
+	if(mode === AUTOCOMPLETE || $('*:focus').attr('id') == 'list'){
+		preventDefaults(e);
+		if (e.which == 40){ // DOWN, move in tag list
+			selection ++;
+			if(selection > tagList.length)
+				selection -= tagList.length;
+		} else if (e.which == 38){ // UP
+			selection --;
+			if(selection <= 0)
+				selection += tagList.length;
+		}	else if (e.which == 13){ // RETURN insert tag
+			var tag = tagList[selection-1];
+			if(tag && tag != ""){
+				insertTagIntoText(tag);
+			} else {
+				$('#text').val($('#text').val()+" ");
+			}
+		}
+		drawList();
 	}
-	drawList();
 }
 
 function removeLastWord(text){
@@ -78,15 +94,16 @@ function insertTagIntoText(tag){
 	// check if we are inserting a recommendation or an autocompletion. in the
 	// latter case, we should complete the word rather than replace it
 	var lastw = lastWord(old_tweet);
+	var new_tweet = '';
 	if(lastw.charAt(0) == '#'){
-		var new_tweet = removeLastWord(old_tweet) + tag + ' ';
+		new_tweet = removeLastWord(old_tweet) + tag + ' ';
 	} else {
 		// this value will be -1 if the tag is not contained in the text.
 		// search here is case insensitive and ignores the hash symbol
 		var tag_position = old_tweet.toLowerCase().indexOf(tag.substring(1)
 			.toLowerCase());
 		var tag_length = tag.length;
-		var new_tweet = "";
+		new_tweet = "";
 	
 		// the tag is already contained in the tweet, with a hashtag.
 		if( old_tweet.toLowerCase().indexOf(tag.toLowerCase()) !== -1){
@@ -106,14 +123,12 @@ function insertTagIntoText(tag){
 			} 
 			new_tweet += tag + " ";
 		}
+		var pos = $('#text').val().length;
+		$('#text').setCursorPosition(pos);
 	}	
 	$('#text').val(new_tweet);
 	calcLength();
 	findRecommendedHashtags();
-}
-
-function completeTag(tag){
-
 }
 
 function drawList(){
@@ -147,14 +162,16 @@ function findRecommendedHashtags(e) {
 	// letters already typed and displays them to the user. Here, no
 	// recommendation is being used, just a plain dictionary-style
 	// autocompletion.
-
 	if(lastw.charAt(0) == '#' &&
 		lastw.length > 3){
 
+		mode=AUTOCOMPLETE;
 		var hashReq = $.ajax({
 			url: "tags.php",
 			type: "POST",
-			data: {lastWord: lastw.substring(1)}
+			data: {
+				lastWord: lastw.substring(1)
+			}
 		});
 		
 		hashReq.done(function(msg){
@@ -164,19 +181,22 @@ function findRecommendedHashtags(e) {
 			for(var i=0;i<msg.length;i++){
 				tagList.push(msg[i]);
 			}
-			selection = 0;
+			selection = 1;
 			drawList();
 		});
 	} else {
+		mode=RECOMMEND;
 		// Following lines are for the actual recommendation.
 		var httpReq = $.ajax({
 			url: "recommend.php",
 			type: "POST",
-			data: {msg: val}
+			data: {
+				msg: val
+			}
 		});
 
 		httpReq.done(function(msg){
-			console.log(msg);
+		//	console.log(msg);
 			// clear old entries
 			tagList = [];
 		
@@ -228,7 +248,8 @@ function extractLast( term ) {
 function checkAndSend(){
 	var text = $('#text').val();
 	$.post("send.php",{
-		status: text}, function(response){
+		status: text
+	}, function(response){
 		if(response == "OK"){
 			$('#text').val("");
 			tagList=[];
@@ -236,18 +257,18 @@ function checkAndSend(){
 			setTimeout("getTimeline()", 3000);
 		} else {
 			$('#error')
-				.val('There has been some trouble tweeting your message!');
+			.val('There has been some trouble tweeting your message!');
 		}
 	});
 }
 
 function getTimeline(){
-	$('#timeline').html('<img src="loading.gif"/>');
+	$('#timeline').html('<img src="images/loading.gif"/>');
 	$.post("timeline.php",
 		function(response){
 			$('#timeline').html('<input type="submit" class="button" value="refresh" onclick="getTimeline()" tabindex="-1"/><br>');
 			for(var i=0;i<response.length;i++){
 				$('#timeline').append('<div class="past-tweet"><div class="date">'+response[i].date+'</div>'+response[i].text+'</div>');
 			}
-	});
+		});
 }

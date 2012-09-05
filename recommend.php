@@ -1,14 +1,14 @@
 <?php
 	include_once("config.php");
 	include_once("algorithm_checker.php");
-	
+	check_algorithms(FALSE);
 	$msg = trim($_POST['msg']);
-	
+/**/
 	// sending back json, so we have to modify the headers.
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-type: application/json');
-	
+/**/	
 	// These are the main steps of the alrorithm:
 
 	if(!function_exists("extract_tags")){

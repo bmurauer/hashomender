@@ -1,11 +1,11 @@
 <html>
 	<head>
 		<title>Twitter Client with automatic Hashtag recommodation</title>
-		<link rel="stylesheet" type="text/css" href="style.css" />
-		<script type="text/javascript" src="jquery.js"></script>
-		<script type="text/javascript" src="jquery-ui.js"></script>
-		<script type="text/javascript" src="jquery-caret.js"></script>
-		<script type="text/javascript" src="script.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles/style.css" />
+		<script type="text/javascript" src="scripts/jquery.js"></script>
+		<script type="text/javascript" src="scripts/jquery-ui.js"></script>
+		<script type="text/javascript" src="scripts/jquery-caret.js"></script>
+		<script type="text/javascript" src="scripts/script.js"></script>
 	</head>
 	<body>
 			<div class="caption">
@@ -31,9 +31,9 @@
 		</div>
 	</body>
 	<script type="text/javascript">
-		$(document).bind("keydown", keyDownHandler);
+//		$(document).bind("keydown", keyDownHandler);
 		$('#text').bind("keyup", findRecommendedHashtags);
-		$('#list').bind("keyup", keyHandler);
+		$(document).bind("keydown", keyHandler);
 		setEventHandlers();
 		findRecommendedHashtags();
 		getTimeline();
