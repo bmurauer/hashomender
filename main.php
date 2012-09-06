@@ -5,15 +5,16 @@
 		<script type="text/javascript" src="scripts/jquery.js"></script>
 		<script type="text/javascript" src="scripts/jquery-ui.js"></script>
 		<script type="text/javascript" src="scripts/jquery-caret.js"></script>
+		<script type="text/javascript" src="scripts/jquery-qtip.js"></script>
 		<script type="text/javascript" src="scripts/script.js"></script>
 	</head>
 	<body>
-			<div class="caption">
-				<h1>Hash-O-Mender</h1>
-		<div class="username">logged in as: <?php echo $user->screen_name;?>|<a href="logout.php" tabindex="-2">logout</a></div>
-				<div id="char"></div>
-			</div>
-		
+		<div class="caption">
+			<h1>Hash-O-Mender</h1>
+			<div class="username">logged in as: <?php echo $user->screen_name; ?>|<a href="logout.php" tabindex="-2">logout</a></div>
+			<div id="char"></div>
+		</div>
+
 		<div class="wrapper">
 			<div class="content">
 				<h2>Input Text:</h2>
@@ -29,13 +30,23 @@
 		</div>
 		<div id="timeline">
 		</div>
+		<div id="tooltip-wrapper">
+			<img src="images/arrow.png"/>
+			<div id="tooltip">
+				<strong>blob</strong>dibubbel
+			</div>
+		</div>
 	</body>
 	<script type="text/javascript">
-//		$(document).bind("keydown", keyDownHandler);
 		$('#text').bind("keyup", findRecommendedHashtags);
 		$(document).bind("keydown", keyHandler);
 		setEventHandlers();
 		findRecommendedHashtags();
 		getTimeline();
+		$(window).resize(function(){
+			$('#tooltip-wrapper').css('left', $('#list').offset().left-50 + 'px');
+			$('#tooltip-wrapper').css('top', $('#list').offset().top+30 + 'px');
+		});
+		$(window).resize();
 	</script>
 </html>

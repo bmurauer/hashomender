@@ -4,8 +4,13 @@ var selection = 0;
 // list of currently recommended tags
 var tagList;
 
+var autocompleteList;
+var autocompleteSelection = 0;
+
 var mode;
 
+var timeline;
+var popup = false;
 var AUTOCOMPLETE = 0;
 var RECOMMEND = 1;
 
@@ -61,7 +66,31 @@ function preventDefaults(e){
 }	
 
 function keyHandler(e){
-	if(mode === AUTOCOMPLETE || $('*:focus').attr('id') == 'list'){
+	if(mode == AUTOCOMPLETE){
+		var lastw = lastWord($('#text').val());
+		preventDefaults(e);
+		if(e.which == 40){
+			autocompleteSelection++;
+			if(autocompleteSelection >= autocompleteList.length){
+				autocompleteSelection -= autocompleteList.length;
+			}
+			drawTooltip(lastw.length);
+		} else if (e.which == 38){
+			autocompleteSelection--;
+			if(autocompleteSelection < 0){
+				autocompleteSelection += autocompleteList.length;
+			}
+			drawTooltip(lastw.length);
+		} else if (e.which == 13){
+			var tag = autocompleteList[autocompleteSelection];
+			if(tag && tag != ''){
+				insertTagIntoText(tag);
+			} else {
+				$('#text').val($('#text').val() + ' ');
+			}
+			hideTooltip();
+		}
+	} else if($('*:focus').attr('id') == 'list'){
 		preventDefaults(e);
 		if (e.which == 40){ // DOWN, move in tag list
 			selection ++;
@@ -75,12 +104,11 @@ function keyHandler(e){
 			var tag = tagList[selection-1];
 			if(tag && tag != ""){
 				insertTagIntoText(tag);
-			} else {
-				$('#text').val($('#text').val()+" ");
 			}
 		}
 		drawList();
 	}
+		
 }
 
 function removeLastWord(text){
@@ -154,7 +182,7 @@ function findRecommendedHashtags(e) {
 		return;	
 	}
 	var val = $("#text").val();
-	calcLength(val);
+	calcLength();
 	var lastw = lastWord(val);
 
 	// following lines check if the user is currently typing a 
@@ -163,8 +191,7 @@ function findRecommendedHashtags(e) {
 	// recommendation is being used, just a plain dictionary-style
 	// autocompletion.
 	if(lastw.charAt(0) == '#' &&
-		lastw.length > 3){
-
+		lastw.length > 3 && val.charAt(val.length-1) != ' '){
 		mode=AUTOCOMPLETE;
 		var hashReq = $.ajax({
 			url: "tags.php",
@@ -175,16 +202,14 @@ function findRecommendedHashtags(e) {
 		});
 		
 		hashReq.done(function(msg){
-			tagList = [];
-		
+			autocompleteList = msg;
 			// print all items into list
-			for(var i=0;i<msg.length;i++){
-				tagList.push(msg[i]);
-			}
-			selection = 1;
-			drawList();
+			if(!tooltip)
+				autocompleteSelection = 0;
+			drawTooltip(lastw.length);
 		});
 	} else {
+		hideTooltip();
 		mode=RECOMMEND;
 		// Following lines are for the actual recommendation.
 		var httpReq = $.ajax({
@@ -196,7 +221,7 @@ function findRecommendedHashtags(e) {
 		});
 
 		httpReq.done(function(msg){
-		//	console.log(msg);
+			//	console.log(msg);
 			// clear old entries
 			tagList = [];
 		
@@ -212,7 +237,41 @@ function findRecommendedHashtags(e) {
 
 }
 
-function calcLength(val) {
+function drawTooltip(length){
+	$('#tooltip').html("");
+	if(autocompleteList.length < 1){
+		hideTooltip();
+		return;
+	}
+	if(!tooltip){
+		autocompleteSelection = 0;
+	}
+	for(var i=0;i<autocompleteList.length;i++){
+		var strong = '';
+		var rest = autocompleteList[i];
+		if(length !== 0){
+			strong = autocompleteList[i].substr(0, length);
+			rest = autocompleteList[i].substr(length);
+		}
+		var elementClass = (i == autocompleteSelection)? 'selected':'';
+		$('#tooltip').append(
+			'<div class="'+elementClass+'"><strong>'+strong+'</strong>'+rest+'<br></div>'
+		);
+	}
+	if(tooltip !== true){
+		$('#tooltip-wrapper').show(300);
+		tooltip = true;
+	}
+}
+function hideTooltip(){
+	if($('#tooltip-wrapper').is(":visible")){
+		$('#tooltip-wrapper').hide(200);
+		tooltip = false;
+		autocompleteSelection = 0;
+	}
+}
+
+function calcLength() {
 	var result = $("#text").val();
 	var remaining = 140 - result.length;
 	
@@ -266,10 +325,29 @@ function getTimeline(){
 	$('#timeline').html('<img src="images/loading.gif"/>');
 	$.post("timeline.php",
 		function(response){
-			console.log(response);
+			//			console.log(response);
+			timeline = response;
 			$('#timeline').html('<input type="submit" class="button" value="refresh" onclick="getTimeline()" tabindex="-1"/><br>');
 			for(var i=0;i<response.length;i++){
-				$('#timeline').append('<div class="past-tweet"><div class="date">'+response[i].date+'</div>'+response[i].text+'</div>');
+				$('#timeline').append('<div class="past-tweet"><div class="date">'
+					+response[i].date+'</div>'+response[i].text+'<br>'+
+					'<input type="submit" class="button" value="Retweet" onClick="retweet('+i+');"/>'+
+					'<input type="submit" class="button" value="Reply" onClick="reply('+i+');"/></div>');
 			}
+			
 		});
+}
+function reply(i){
+	var text = '@'+timeline[i].name + ' ';
+	$('#text').val(text);
+	findRecommendedHashtags(null);
+	var pos = $('#text').val().length-1;
+	$('#text').setCursorPosition(pos);
+}
+function retweet(i){
+	var text = 'RT @'+timeline[i].name + ' ' + timeline[i].text;
+	$('#text').val(text);
+	findRecommendedHashtags(null);
+	var pos = $('#text').val().length;
+	$('#text').setCursorPosition(pos);
 }

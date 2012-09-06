@@ -14,7 +14,7 @@ $tag_pool = array();
 /**
  * How many tags will be returned as a result
  */
-$pool_size = 20;
+$pool_size = AUTOCOMPLETE_LIMIT;
 
 /**
  * How many times this function will fetch more tags if the final amount is not
@@ -27,7 +27,7 @@ $timeout = 10;
  */
 $fetch_size = 20;
 
-$word = strtolower($_POST['lastWord']);
+$word = escapeSolrValue(strtolower($_POST['lastWord']));
 
 for ($i = 0; $i < $timeout; $i++) {
 	$req = new HttpRequest(
@@ -55,4 +55,13 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 header('Content-type: application/json');
 /**/
 print(json_encode($tag_pool_reduced));
+
+// from http://e-mats.org/2010/01/escaping-characters-in-a-solr-query-solr-url/
+	function escapeSolrValue($string){
+        $match = array('\\', '+', '-', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^', '~', '*', '?', ':', '"', ';', ' ');
+        $replace = array('\\\\', '\\+', '\\-', '\\&', '\\|', '\\!', '\\(', '\\)', '\\{', '\\}', '\\[', '\\]', '\\^', '\\~', '\\*', '\\?', '\\:', '\\"', '\\;', '\\ ');
+        $string = str_replace($match, $replace, $string);
+ 
+        return $string;
+    }
 ?>

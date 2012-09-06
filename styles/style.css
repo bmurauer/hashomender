@@ -110,7 +110,7 @@ a{
 	color: #f80;
 	text-decoration: none;
 }
-.username a: hover{
+.username a:hover{
 	text-decoration: underline;
 }
 
@@ -150,4 +150,25 @@ a{
 	color: #777;
 	font-size: 8pt;
 	margin-bottom: 5px;
+}
+#tooltip-wrapper{
+	position: absolute;
+	z-index: 4;
+}
+
+#tooltip-wrapper img{
+	float:left;
+}
+#tooltip {
+	z-index: 2;
+	background: #fffeee;
+	margin-left: 24px;
+	font-family:"Helvetica";
+	padding: 10px;
+	border: 1px solid #aaa;
+	min-height: 24px;
+	box-shadow: #999 0 0 3px 0px;
+	
+	left: 300px;
+	top: 400px;
 }

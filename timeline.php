@@ -10,11 +10,11 @@
 	include 'EpiTwitter/EpiOAuth.php';
 	include 'EpiTwitter/EpiTwitter.php';
 	include 'config.php';
-
+/**/
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-type: application/json');
-
+/**/
 	$Twitter = new EpiTwitter(CONSUMER_KEY, CONSUMER_SECRET);
 	$Twitter->setToken($_COOKIE['oauth_token'],$_COOKIE['oauth_token_secret']);
 	$Twitter->get_accountVerify_credentials();
@@ -30,6 +30,7 @@
 			$tweet_result_text = preg_replace($reg_exUrl, '<a href="'.$url[0].'">'.$url[0].'</a>', $tweet['text']);
 		}
 		$response[] = array(
+			"name" => $tweet['user']['name'],
 			"text" => $tweet_result_text,
 			"date" => $tweet['created_at']
 		);

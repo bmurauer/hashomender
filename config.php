@@ -20,6 +20,11 @@
 	define("TAG_LIMIT", 10);
 
 	/**
+	 * how many tags will be shown for autocompletion
+	 */
+	define("AUTOCOMPLETE_LIMIT", 10);
+	
+	/**
 	 * The url to the solr server
 	 */
 	define("SOLR_URL", "http://localhost:8983/solr/select/");
