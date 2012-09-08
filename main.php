@@ -1,11 +1,13 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+       "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
 		<title>Twitter Client with automatic Hashtag recommodation</title>
 		<link rel="stylesheet" type="text/css" href="styles/style.css" />
 		<script type="text/javascript" src="scripts/jquery.js"></script>
 		<script type="text/javascript" src="scripts/jquery-ui.js"></script>
 		<script type="text/javascript" src="scripts/jquery-caret.js"></script>
-		<script type="text/javascript" src="scripts/jquery-qtip.js"></script>
 		<script type="text/javascript" src="scripts/script.js"></script>
 	</head>
 	<body>

@@ -221,7 +221,7 @@ function findRecommendedHashtags(e) {
 		});
 
 		httpReq.done(function(msg){
-			//	console.log(msg);
+				console.log(msg);
 			// clear old entries
 			tagList = [];
 		

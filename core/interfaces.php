@@ -2,7 +2,7 @@
 
 /**
  * The main interfaces 
- * @author benjamin
+ * @author Benjamin Murauer
  */
 
 /**
@@ -20,7 +20,7 @@ interface iQueryConstructor {
 	 * @return string
 	 *		The complete Solr query
 	 */
-	public function getQuery($post);
+	public function getRecommendQuery($post);
 }
 
 /**

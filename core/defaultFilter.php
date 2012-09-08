@@ -1,9 +1,6 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+include_once('config.php');
 
 /**
  * Description of defaultFilter
@@ -13,7 +10,7 @@
 class defaultFilter implements iFilter{
 
 	public function filterTags($tags) {
-		
+		return array_slice($tags, 0, TAG_LIMIT);
 	}
 }
 
