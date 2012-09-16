@@ -49,7 +49,7 @@ function parseToXML($input, $output, $limit) {
             // !feof($fp) is not enough, prevent 
             if(!isset($tweet)){
                 print("stopped after $id tweets.");
-                break;
+                continue;
             }
             
             fputs($re, "\t<doc>\n");
@@ -92,7 +92,7 @@ function parseToJSON($input, $output, $limit) {
             // !feof($fp) is not enough, prevent 
             if(!isset($tweet)){
                 print("stopped after $id tweets.");
-                break;
+                continue;
             }
             
             $output['tweet'] = $tweet->text;
