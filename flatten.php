@@ -48,6 +48,7 @@ function parseToXML($input, $output, $limit) {
             
             // !feof($fp) is not enough, prevent 
             if(!isset($tweet)){
+                print("stopped after $i tweets.");
                 break;
             }
             
@@ -90,6 +91,7 @@ function parseToJSON($input, $output, $limit) {
             
             // !feof($fp) is not enough, prevent 
             if(!isset($tweet)){
+                print("stopped after $i tweets.");
                 break;
             }
             
