@@ -253,7 +253,7 @@ function drawTooltip(length){
 			strong = autocompleteList[i].substr(0, length);
 			rest = autocompleteList[i].substr(length);
 		}
-		var elementClass = (i == autocompleteSelection)? 'selected':'';
+		var elementClass = (i == autocompleteSelection)? 'tip selected':'tip';
 		$('#tooltip').append(
 			'<div class="'+elementClass+'"><strong>'+strong+'</strong>'+rest+'<br></div>'
 		);
@@ -325,27 +325,32 @@ function getTimeline(){
 	$('#timeline').html('<img src="images/loading.gif"/>');
 	$.post("timeline.php",
 		function(response){
-			//			console.log(response);
 			timeline = response;
 			$('#timeline').html('<input type="submit" class="button" value="refresh" onclick="getTimeline()" tabindex="-1"/><br>');
 			for(var i=0;i<response.length;i++){
-				$('#timeline').append('<div class="past-tweet"><div class="date">'
-					+response[i].date+'</div>'+response[i].text+'<br>'+
-					'<input type="submit" class="button" value="Retweet" onClick="retweet('+i+');"/>'+
-					'<input type="submit" class="button" value="Reply" onClick="reply('+i+');"/></div>');
+                console.log(response);
+                var reg_exUrl = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/;
+                var linked = response[i].text.replace(reg_exUrl, function(url){
+                    return '<a href="'+url+'">'+url+'</a>';
+                });
+				$('#timeline').append('<div class="past-tweet"><div class="date">'+response[i].date+'</div>'
+                    +'<div class="timeline-user">'+response[i].name+'</div>'
+                    +linked+'<br>'
+                    +'<input type="submit" class="button" value="Retweet" onClick="retweet('+i+');"/>'
+					+'<input type="submit" class="button" value="Reply" onClick="reply('+i+');"/></div>');
 			}
 			
 		});
 }
 function reply(i){
-	var text = '@'+timeline[i].name + ' ';
+	var text = '@'+timeline[i].screen_name + ': ';
 	$('#text').val(text);
 	findRecommendedHashtags(null);
 	var pos = $('#text').val().length-1;
 	$('#text').setCursorPosition(pos);
 }
 function retweet(i){
-	var text = 'RT @'+timeline[i].name + ' ' + timeline[i].text;
+	var text = 'RT @'+timeline[i].screen_name + ': ' + timeline[i].text;
 	$('#text').val(text);
 	findRecommendedHashtags(null);
 	var pos = $('#text').val().length;

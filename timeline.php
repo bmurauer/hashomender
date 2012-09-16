@@ -24,15 +24,17 @@
 	$response = array();
 	
 	foreach($timeline->response as $tweet){
-		$reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
-		$tweet_result_text = $tweet['text'];
-		if(preg_match($reg_exUrl, $tweet['text'], $url)){
-			$tweet_result_text = preg_replace($reg_exUrl, '<a href="'.$url[0].'">'.$url[0].'</a>', $tweet['text']);
-		}
+        // twitter format: Fri Sep 14 12:00:03 +0000 2012
+		$date = split(" ", $tweet['created_at']);
+        $day = $date[2];
+        $month = $date[1];
+        $year = $date[5];
+        $time = substr($date[3], 0, 5);
 		$response[] = array(
 			"name" => $tweet['user']['name'],
-			"text" => $tweet_result_text,
-			"date" => $tweet['created_at']
+            "screen_name" => $tweet['user']['screen_name'],
+			"text" => $tweet['text'],
+			"date" => $day.'. '.$month.' '.$year.' '.$time,
 		);
 	}
 	print(json_encode($response));

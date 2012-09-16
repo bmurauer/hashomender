@@ -9,6 +9,12 @@
 
 include_once 'config.php';
 
+/**/
+header('Cache-Control: no-cache, must-revalidate');
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+header('Content-type: application/json');
+/**/
+
 $tag_pool = array();
 
 /**
@@ -31,7 +37,9 @@ $word = escapeSolrValue(strtolower($_POST['lastWord']));
 
 for ($i = 0; $i < $timeout; $i++) {
 	$req = new HttpRequest(
-					SOLR_URL . '?q=hashtags:' . trim($word) . '*&fl=hashtags&start=' . $i * $fetch_size . '&rows=' . $fetch_size . '&wt=json&indent=true');
+					SOLR_URL . '?q=hashtags:' . trim($word) 
+            . '*&fl=hashtags&start=' . $i * $fetch_size 
+            . '&rows=' . $fetch_size . '&wt=json&indent=true');
 	$result = json_decode($req->send()->getBody());
 	foreach ($result->response->docs as $tweet) {
 		$tags = explode(" ", $tweet->hashtags);
@@ -45,15 +53,13 @@ for ($i = 0; $i < $timeout; $i++) {
 	if (count($tag_pool) >= $pool_size){
 		break;
 	}
+    
 }
 
+
+usort($tag_pool, "cmp_function");
 $tag_pool_reduced = array_splice($tag_pool, 0, $pool_size);
 
-/**/
-header('Cache-Control: no-cache, must-revalidate');
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Content-type: application/json');
-/**/
 print(json_encode($tag_pool_reduced));
 
 // from http://e-mats.org/2010/01/escaping-characters-in-a-solr-query-solr-url/
@@ -63,5 +69,9 @@ print(json_encode($tag_pool_reduced));
         $string = str_replace($match, $replace, $string);
  
         return $string;
+    }
+    
+    function cmp_function($a, $b){
+        return strlen($a)-strlen($b);
     }
 ?>

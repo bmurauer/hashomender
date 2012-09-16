@@ -26,7 +26,7 @@ body{
 	font-family:arial;
 	font-size:15px;
 	font-weight:normal;
-	padding:0px 2px;
+	padding:2px 4px;
 	text-decoration:none;
 }
 .button:hover {
@@ -119,8 +119,8 @@ a{
 }
 
 .disabled{
-	color: #2f2f2f;
-	border-color: #2f2f2f;
+	color: #999;
+	border-color: #ccc;
 }
 
 .selected, .unselected:hover{
@@ -132,6 +132,12 @@ a{
 	position: absolute;
 	left: 10px;
 	top: 140px;
+}
+.timeline-user{
+    font-style: italic;
+    color: gray;
+    padding-left: 5px;
+    padding-bottom: 5px;
 }
 .past-tweet {
 	width: 230px;
@@ -161,14 +167,21 @@ a{
 }
 #tooltip {
 	z-index: 2;
-	background: #fffeee;
+	background: #fdb;
 	margin-left: 24px;
 	font-family:"Helvetica";
+    font-size: 16pt;
 	padding: 10px;
 	border: 1px solid #aaa;
 	min-height: 24px;
 	box-shadow: #999 0 0 3px 0px;
-	
 	left: 300px;
 	top: 400px;
+}
+.tip{
+    padding: 2px;
+}
+#tooltip .selected{
+    box-shadow: inset #fdb 0 0 3px 0;
+    background: white;
 }
