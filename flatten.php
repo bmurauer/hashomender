@@ -5,27 +5,27 @@
  * mongoDB database. Flat structure is needed for SOLR, which can't handle
  * hierarchies in its index.
  */
-
-if($argc != 5){
-    error();
-}
-
-$input = $argv[1];
-$output = $argv[2];
-$format = $argv[3];
-$limit = intval($argv[4]);
-
-switch($format){
-    case 'xml': parseToXML($input, $output, $limit);
-        break;
-    case 'json': parseToJSON($input, $output, $limit);
-        break;
-    default:
+function init() {
+    if ($argc != 5) {
         error();
+    }
+
+    $input = $argv[1];
+    $output = $argv[2];
+    $format = $argv[3];
+    $limit = intval($argv[4]);
+
+    switch ($format) {
+        case 'xml': parseToXML($input, $output, $limit);
+            break;
+        case 'json': parseToJSON($input, $output, $limit);
+            break;
+        default:
+            error();
+    }
 }
 
-
-function error(){
+function error() {
     print('usage: php flatten.php <input.json> <output> <format> <limit>');
     print("\t<input.json>: the input file holding tweets");
     print("\t<output>: your output file");
@@ -45,13 +45,12 @@ function parseToXML($input, $output, $limit) {
         while (!feof($fp) && ($limit == 0 || $id < $limit)) {
             $buffer = fgets($fp);
             $tweet = json_decode($buffer);
-            
-            // !feof($fp) is not enough, prevent 
-            if(!isset($tweet)){
-                print("stopped after $id tweets.");
+
+            // some lines may be faulty
+            if (!isset($tweet)) {
                 continue;
             }
-            
+
             fputs($re, "\t<doc>\n");
             fputs($re, "\t\t<field name=\"id\">$id</field>\n");
             fputs($re, "\t\t" . '<field name="tweet">' . $tweet->text . '</field>' . "\n");
@@ -88,28 +87,32 @@ function parseToJSON($input, $output, $limit) {
             $tweet = json_decode($buffer);
             $output = array();
             $output['id'] = $id;
-            
-            // !feof($fp) is not enough, prevent 
-            if(!isset($tweet)){
-                print("stopped after $id tweets.");
+
+            // some lines may be faulty
+            if (!isset($tweet)) {
                 continue;
             }
-            
+
             $output['tweet'] = $tweet->text;
             $output['hashtags'] = '';
             foreach ($tweet->entities->hashtags as $tag) {
                 $output['hashtags'] .= $tag->text . " ";
             }
+            
             // remove trailing space
             $output['hashtags'] = trim($output['hashtags']);
-            fputs($re, json_encode($output)."\n");
+            
+            // the comma is necessary for the syntax of the array (remember:
+            // the array is too big to print as a whole, so just single elements
+            // are printed), the newline is optional to better read the result
+            fputs($re, json_encode($output) . ",\n");
             $id++;
         }
-        // this removes the last comma from the array => SOLR does not accept 
-        // a trailing comma
-        fseek($re, -1, SEEK_CUR);
+        // this removes the last 2 characters from the file (linebreak and a 
+        // comma) => SOLR does not accept a trailing comma
+        fseek($re, -2, SEEK_CUR);
         // close the array
-        fputs($re, "]");
+        fputs($re, "] ");
         // close file pointers
         fclose($fp);
         fclose($re);

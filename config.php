@@ -45,4 +45,8 @@
 	 * algorithm. This is needed for the total score calculation.
 	 */
 	define("FACTOR_COUNT", 0.2);
+    
+    define("TMP_LOCATION", "/tmp/tmp_outut.json");
+    
+    define("LOG_LOCATION", "/tmp/hashomender.log");
 ?>
