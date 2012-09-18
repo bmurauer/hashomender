@@ -23,8 +23,10 @@
 		"count" => TIMELINE_LIMIT));
 	$response = array();
 	
+    // we have to modify the result, as not all of it is needed by the client.
 	foreach($timeline->response as $tweet){
-        // twitter format: Fri Sep 14 12:00:03 +0000 2012
+        // twitter time format: Fri Sep 14 12:00:03 +0000 2012
+        // desired format: 14 Sep 2012 12:00
 		$date = split(" ", $tweet['created_at']);
         $day = $date[2];
         $month = $date[1];

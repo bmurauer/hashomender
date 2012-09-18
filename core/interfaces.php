@@ -10,17 +10,17 @@
  * information
  */
 interface iQueryConstructor {
-	
-	/**
-	 * this function builds the Solr query from the words inside the $post
-	 * array. 
-	 * 
-	 * @param string[] $post
-	 *		The words the user typed into the text area
-	 * @return string
-	 *		The complete Solr query
-	 */
-	public function getRecommendQuery($post);
+
+    /**
+     * this function builds the Solr query from the words inside the $post
+     * array. 
+     * 
+     * @param string[] $post
+     * 		The words the user typed into the text area
+     * @return string
+     * 		The complete Solr query
+     */
+    public function getRecommendQuery($post);
 }
 
 /**
@@ -28,16 +28,17 @@ interface iQueryConstructor {
  * exact form and supported features of the tweets depend on the implementation.
  */
 interface iFetcher {
-	/**
-	 * sends a http request with a given query to solr and returs a set of
-	 * tweets
-	 * 
-	 * @param string $query
-	 *		the complete Solr query
-	 * @return mixed[]
-	 *		a set of tweets
-	 */
-	public function getTweets($query);
+
+    /**
+     * sends a http request with a given query to solr and returs a set of
+     * tweets
+     * 
+     * @param string $query
+     * 		the complete Solr query
+     * @return mixed[]
+     * 		a set of tweets
+     */
+    public function getTweets($query);
 }
 
 /**
@@ -48,16 +49,17 @@ interface iFetcher {
  * set can contain additional information that is used for sorting later on.
  */
 interface iExtractor {
-	/**
-	 * extracts the hashtags of the given tweets. Might also add additional 
-	 * information for sorting.
-	 * 
-	 * @param mixed[] $tweets
-	 *		a set of tweets
-	 * @return mixed[]
-	 *		a set of tags
-	 */
-	public function extractTags($tweets);
+
+    /**
+     * extracts the hashtags of the given tweets. Might also add additional 
+     * information for sorting.
+     * 
+     * @param mixed[] $tweets
+     * 		a set of tweets
+     * @return mixed[]
+     * 		a set of tags
+     */
+    public function extractTags($tweets);
 }
 
 /**
@@ -66,28 +68,31 @@ interface iExtractor {
  * information for the user (no score etc.).
  */
 interface iSorter {
-	/**
-	 * 
-	 * @param mixed[] $tags
-	 *		The hashtags
-	 * @return mixed[]
-	 *		An array of tags that is sorted
-	 */
-	public function sortTags($tags);
+
+    /**
+     * 
+     * @param mixed[] $tags
+     * 		The hashtags
+     * @return mixed[]
+     * 		An array of tags that is sorted
+     */
+    public function sortTags($tags);
 }
 
 /**
  * filters the tags by reducing the amount, adding content filters,...
  */
 interface iFilter {
-	/**
-	 * this function filters the given hashtag array. 
-	 * 
-	 * @param mixed[] $tags
-	 *		The hashtags
-	 * @return mixed[]
-	 *		the filtered hashtag array
-	 */
-	public function filterTags($tags);
+
+    /**
+     * this function filters the given hashtag array. 
+     * 
+     * @param mixed[] $tags
+     * 		The hashtags
+     * @return mixed[]
+     * 		the filtered hashtag array
+     */
+    public function filterTags($tags);
 }
+
 ?>

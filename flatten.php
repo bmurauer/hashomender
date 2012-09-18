@@ -5,89 +5,107 @@
  * mongoDB database. Flat structure is needed for SOLR, which can't handle
  * hierarchies in its index.
  */
-function init() {
-    if ($argc != 5) {
-        error();
-    }
 
-    $input = $argv[1];
-    $output = $argv[2];
-    $format = $argv[3];
-    $limit = intval($argv[4]);
-
-    switch ($format) {
-        case 'xml': parseToXML($input, $output, $limit);
-            break;
-        case 'json': parseToJSON($input, $output, $limit);
-            break;
-        default:
-            error();
-    }
-}
-
-function error() {
-    print('usage: php flatten.php <input.json> <output> <format> <limit>');
-    print("\t<input.json>: the input file holding tweets");
-    print("\t<output>: your output file");
-    print("\t<format>: desired format (either 'xml' or 'json')");
-    print("\t<limit>: limits the amount of output tweets");
-    exit("invalid parameters");
-}
-
-function parseToXML($input, $output, $limit) {
+/**
+ * parses a json tweet input file and writes to a flattened xml file.
+ * The resulting XML will have following structure:<br>
+ * <code>
+  &lt;add&gt;<br>
+  &emsp;&lt;doc&gt;<br>
+  &emsp;&emsp;&lt;field name="id"&gt;0&lt;/field&gt;<br>
+  &emsp;&emsp;&lt;field name="tweet"&gt;text #hashtag&lt;/field&gt;<br>
+  &emsp;&emsp;&lt;field name="hashtags"&gt;hashtag&lt;/field&gt;<br>
+  &emsp;&lt;/doc&gt;<br>
+  &emsp;&lt;doc&gt;<br>
+  &emsp;&emsp;&lt;field name="id"&gt;1&lt;/field&gt;<br>
+  &emsp;&emsp;&lt;field name="tweet"&gt;no tags&lt;/field&gt;<br>
+  &emsp;&emsp;&lt;field name="hashtags"&gt;&lt;/field&gt;<br>
+  &emsp;&lt;/doc&gt;<br>
+  ...<br>
+  &lt;/add&gt;<br>
+ * </code>
+ * 
+ * @param string $input
+ *      The input file path
+ * @param string $output
+ *      The output file path
+ * @param int $limit optional
+ *      limits the output to a certain number of tweets (useful for testing)
+ *      if this parameter is omitted, all input tweets are processed.
+ *      
+ */
+function parseToXML($input, $output, $limit = 0) {
     // input
-    $fp = fopen($input, "r") or die("Could not open file");
+    $input_file = fopen($input, "r") or die("Could not open file");
     // output
-    $re = fopen($output, "w") or die("Could not open result file");
-    if ($fp && $re) {
-        fputs($re, "<add>\n");
+    $output_file = fopen($output, "w") or die("Could not open result file");
+    if ($input_file && $output_file) {
+        fputs($output_file, "<add>\n");
         $id = 0;
-        while (!feof($fp) && ($limit == 0 || $id < $limit)) {
-            $buffer = fgets($fp);
+        while (!feof($input_file) && ($limit == 0 || $id < $limit)) {
+            $buffer = fgets($input_file);
+ 
             $tweet = json_decode($buffer);
-
             // some lines may be faulty
             if (!isset($tweet)) {
                 continue;
             }
 
-            fputs($re, "\t<doc>\n");
-            fputs($re, "\t\t<field name=\"id\">$id</field>\n");
-            fputs($re, "\t\t" . '<field name="tweet">' . $tweet->text . '</field>' . "\n");
-            fputs($re, "\t\t" . '<field name="hashtags">');
+            fputs($output_file, "\t<doc>\n");
+            fputs($output_file, "\t\t<field name=\"id\">$id</field>\n");
+            fputs($output_file, "\t\t" . '<field name="tweet">' . $tweet->text . '</field>' . "\n");
+            fputs($output_file, "\t\t" . '<field name="hashtags">');
             foreach ($tweet->entities->hashtags as $tag) {
-                fputs($re, $tag->text . " ");
+                fputs($output_file, $tag->text . " ");
             }
-            fputs($re, "</field>\n");
-            fputs($re, "\t</doc>\n");
+            fputs($output_file, "</field>\n");
+            fputs($output_file, "\t</doc>\n");
             $id++;
         }
-        fputs($re, "</add>\n");
-        fclose($fp);
-        fclose($re);
+        fputs($output_file, "</add>\n");
+        fclose($input_file);
+        fclose($output_file);
         print("Added $id tweets to result file\n");
     }
 }
 
-function parseToJSON($input, $output, $limit) {
-    // input
-    $fp = fopen($input, "r") or die("Could not open file");
-    // output
-    $re = fopen($output, "w") or die("Could not write result file");
-    if ($fp && $re) {
+/**
+ * parses a json tweet input file and writes to a flattened json file.
+ * The resulting JSON will have following structure:
+ * <code><br>
+ *  [<br>
+ *  &emsp;{"id":0, "tweet":"text #hashtag", "hashtags":"hashtag"},<br>
+ *  &emsp;{"id":1, "tweet":"no tags", "hashtags":""}<br>
+ * ...<br>
+ *  ]<br>
+ * </code>
+ * 
+ * @param string $input
+ *      The input file path
+ * @param string $output
+ *      The output file path
+ * @param int $limit optional
+ *      limits the output to a certain number of tweets (useful for testing)
+ *      if this parameter is omitted, all input tweets are processed.
+ *      
+ */
+function parseToJSON($input, $output, $limit = 0) {
+    $input_file = fopen($input, "r") or die("Could not open file");
+    $output_file = fopen($output, "w") or die("Could not write result file");
+    if ($input_file && $output_file) {
         // result is an array, but it might not fit in the memory -> step
         // through the original data and writing one array element at a time.
         // in JSON, arrays start with a '[' symbol.
-        fputs($re, "[");
+        fputs($output_file, "[\n");
         $id = 0;
-        while (!feof($fp) && ($limit == 0 || $id < $limit)) {
+        while (!feof($input_file) && ($limit == 0 || $id < $limit)) {
             // fgets reads one line from a file pointer
             // the MongoDB data is stored in lines (one tweet = one line)
-            $buffer = fgets($fp);
-            $tweet = json_decode($buffer);
+            $buffer = fgets($input_file);
             $output = array();
             $output['id'] = $id;
 
+            $tweet = json_decode($buffer);
             // some lines may be faulty
             if (!isset($tweet)) {
                 continue;
@@ -98,24 +116,24 @@ function parseToJSON($input, $output, $limit) {
             foreach ($tweet->entities->hashtags as $tag) {
                 $output['hashtags'] .= $tag->text . " ";
             }
-            
+
             // remove trailing space
             $output['hashtags'] = trim($output['hashtags']);
-            
+
             // the comma is necessary for the syntax of the array (remember:
             // the array is too big to print as a whole, so just single elements
             // are printed), the newline is optional to better read the result
-            fputs($re, json_encode($output) . ",\n");
+            fputs($output_file, json_encode($output) . ",\n");
             $id++;
         }
-        // this removes the last 2 characters from the file (linebreak and a 
+        // this moves the file pointer 2 charcters back (linebreak and a 
         // comma) => SOLR does not accept a trailing comma
-        fseek($re, -2, SEEK_CUR);
-        // close the array
-        fputs($re, "] ");
+        fseek($output_file, -2, SEEK_CUR);
+        // close the array 
+        fputs($output_file, "]");
         // close file pointers
-        fclose($fp);
-        fclose($re);
+        fclose($input_file);
+        fclose($output_file);
         print("Added $id tweets to result file\n");
     }
 }
