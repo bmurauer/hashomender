@@ -37,7 +37,7 @@ for ($i = 0; $i < AUTOCOMPLETE_TIMEOUT; $i++) {
             }
         }
     }
-    if (count($tag_pool) >= AUTO) {
+    if (count($tag_pool) >= AUTOCOMPLETE_LIMIT) {
         break;
     }
 }
