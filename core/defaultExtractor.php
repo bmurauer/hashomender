@@ -42,7 +42,6 @@ class defaultExtractor implements iExtractor {
         }
         return $tags;
     }
-
 }
 
 ?>

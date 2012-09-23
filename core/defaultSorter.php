@@ -15,7 +15,7 @@ class defaultSorter implements iSorter {
      * @param mixed[] $tags
      * 		the tags to be sorted
      * @return string[]
-     * 		The strings in this array	are later displayed unmodified to the 
+     * 		The strings in this array are later displayed unmodified to the 
      *      user.
      */
     public function sortTags($tags) {

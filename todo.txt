@@ -1,1 +1,9 @@
 ids der tweets, nicht fortlaufend
+
+fragen:
+
+wenn tags in mehrerern tweets vorkommen, welcher score wird ihnen zugewiesen?
+wie soll ich verwendete libraries in der arbeit zitieren?
+difference autocompletion - recommendation vl in 2 spalten anzeigen?
+frontpage: Titel v. Eva u Wolfgang, Specht auch drauf?
+welche teile von ursprünglicher arbeit mit rein?

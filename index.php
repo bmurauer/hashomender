@@ -5,8 +5,6 @@ require_once 'EpiTwitter/EpiCurl.php';
 require_once 'EpiTwitter/EpiOAuth.php';
 require_once 'EpiTwitter/EpiTwitter.php';
 
-require_once 'algorithm_checker.php';
-
 $Twitter = new EpiTwitter(CONSUMER_KEY, CONSUMER_SECRET);
 
 if (isset($_GET['oauth_token']) || (isset($_COOKIE['oauth_token']) && isset($_COOKIE['oauth_token_secret']))) {
@@ -38,7 +36,6 @@ if (isset($_GET['oauth_token']) || (isset($_COOKIE['oauth_token']) && isset($_CO
     // the $user variable is used in the "main.php" file.
     $user = $Twitter->get_accountVerify_credentials();
     // include main page
-    check_algorithms(TRUE);
     include ('main.php');
 } elseif (isset($_GET['denied'])) {
     // user denied access
