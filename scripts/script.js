@@ -19,6 +19,7 @@ var ignoredKeycodes = [
 40, // UP
 13, // ENTER
 9,  // TAB
+27, // ESCAPE
 ];
 
 new function($) {
@@ -88,6 +89,8 @@ function keyHandler(e){
             } else {
                 $('#text').val($('#text').val() + ' ');
             }
+            hideTooltip();
+        } else if (e.which == 27){ // ecsape closes tooltip
             hideTooltip();
         }
     } else if($('*:focus').attr('id') == 'list'){

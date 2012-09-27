@@ -8,11 +8,6 @@
  */
 include_once 'config.php';
 
-/**/
-header('Cache-Control: no-cache, must-revalidate');
-header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-header('Content-type: application/json');
-/**/
 
 $tag_pool = array();
 
@@ -47,6 +42,11 @@ usort($tag_pool, "cmp_function");
 // if we got more than wanted
 $tag_pool_reduced = array_splice($tag_pool, 0, AUTOCOMPLETE_LIMIT);
 
+/**/
+header('Cache-Control: no-cache, must-revalidate');
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+header('Content-type: application/json');
+/**/
 print(json_encode($tag_pool_reduced));
 
 /**

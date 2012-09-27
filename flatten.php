@@ -52,7 +52,7 @@ function parseToXML($input, $output, $limit = 0) {
             }
 
             fputs($output_file, "\t<doc>\n");
-            fputs($output_file, "\t\t<field name=\"id\">$id</field>\n");
+            fputs($output_file, "\t\t<field name=\"id\">$tweet->id_str</field>\n");
             fputs($output_file, "\t\t" . '<field name="tweet">' . $tweet->text . '</field>' . "\n");
             fputs($output_file, "\t\t" . '<field name="hashtags">');
             foreach ($tweet->entities->hashtags as $tag) {
@@ -103,14 +103,15 @@ function parseToJSON($input, $output, $limit = 0) {
             // the MongoDB data is stored in lines (one tweet = one line)
             $buffer = fgets($input_file);
             $output = array();
-            $output['id'] = $id;
 
             $tweet = json_decode($buffer);
+            print_r($tweet);
             // some lines may be faulty
             if (!isset($tweet)) {
                 continue;
             }
 
+            $output['id'] = $tweet->id_str;
             $output['tweet'] = $tweet->text;
             $output['hashtags'] = '';
             foreach ($tweet->entities->hashtags as $tag) {
