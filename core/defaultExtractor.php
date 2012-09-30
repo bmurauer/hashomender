@@ -30,12 +30,12 @@ class defaultExtractor implements iExtractor {
             foreach ($tweets->response->docs as $tweet) {
                 $score = $tweet->score;
                 foreach (explode(" ", $tweet->hashtags) as $tag) {
-                    if (!isset($tags[$tag])) {
-                        $tags[$tag] = array('count' => 1, 'maxScore' => $score);
+                    if (!isset($tags[strtolower($tag)])) {
+                        $tags[strtolower($tag)] = array('original' => $tag, 'count' => 1, 'maxScore' => $score);
                     } else {
-                        $tags[$tag]['count']++;
-                        $old = $tags[$tag]['maxScore'];
-                        $tags[$tag]['maxScore'] = max(array($old, $score));
+                        $tags[strtolower($tag)]['count']++;
+                        $old = $tags[strtolower($tag)]['maxScore'];
+                        $tags[strtolower($tag)]['maxScore'] = max(array($old, $score));
                     }
                 }
             }

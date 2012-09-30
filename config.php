@@ -73,4 +73,12 @@ define("AUTOCOMPLETE_TIMEOUT", 10);
  */
 define("AUTOCOMPLETE_FETCH_SIZE", 20);
 
+$modules = array(
+    'queryConstructor' => 'defaultQueryConstructor',
+    'fetcher' => 'defaultFetcher',
+    'extractor' => 'defaultExtractor',
+    'sorter' => 'defaultSorter',
+    'filter' => 'defaultFilter'
+);
+
 ?>

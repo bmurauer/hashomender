@@ -1,0 +1,2109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project version="2.0.0a10" title="">
+  <file path="recommend.php" hash="1d7b928891ad824cd8f5526e856a5510" package="Default">
+    <include line="8" type="Include Once" package="Default">
+      <name>core/interfaces.php</name>
+      <docblock line="3">
+        <description><![CDATA[this file includes the main process of recommending hashtags, depending on
+which modules are used.]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <include line="9" type="Include Once" package="Default">
+      <name>core/defaultQueryConstructor.php</name>
+    </include>
+    <include line="10" type="Include Once" package="Default">
+      <name>core/defaultFetcher.php</name>
+    </include>
+    <include line="11" type="Include Once" package="Default">
+      <name>core/defaultExtractor.php</name>
+    </include>
+    <include line="12" type="Include Once" package="Default">
+      <name>core/defaultSorter.php</name>
+    </include>
+    <include line="13" type="Include Once" package="Default">
+      <name>core/defaultFilter.php</name>
+    </include>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file recommend.php</error>
+    </parse_markers>
+  </file>
+  <file path="tags.php" hash="9da3daba2430e9e62688c3801ba75995" package="Default">
+    <include line="9" type="Include Once" package="Default">
+      <name>config.php</name>
+      <docblock line="3">
+        <description><![CDATA[This file is called by AHAH when the user types a hashtag him/herself.]]></description>
+        <long-description><![CDATA[<p>It
+represents a simple dictionary-style autocompletion. A query to SOLR is made
+and the results are checked for duplicates, then added to a list. As long as
+the list has not the final size, more results are fetched.</p>]]></long-description>
+      </docblock>
+    </include>
+    <function namespace="global" line="61" package="Default">
+      <name>escapeSolrValue</name>
+      <full_name>\escapeSolrValue</full_name>
+      <docblock line="52">
+        <description><![CDATA[this function escapes symbols that are special characters for the Solr query.]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="52" name="author" description="&lt;a href=&quot;http://e-mats.org/2010/01/escaping-characters-in-a-solr-query-solr-url/&quot;&gt;e-mats.org&lt;/a&gt;"/>
+        <tag line="52" name="param" description="the string we want to escape" type="string" variable="$string">
+          <type by_reference="false">string</type>
+        </tag>
+        <tag line="52" name="return" description="the escaped string" type="string">
+          <type by_reference="false">string</type>
+        </tag>
+      </docblock>
+      <argument line="61">
+        <name>$string</name>
+        <default><![CDATA[]]></default>
+        <type/>
+      </argument>
+    </function>
+    <function namespace="global" line="77" package="Default">
+      <name>cmp_function</name>
+      <full_name>\cmp_function</full_name>
+      <docblock line="68">
+        <description><![CDATA[this helper function is used for usort.]]></description>
+        <long-description><![CDATA[<p>It is supposed to sort tags
+according to their string length. shorter strings end up at the top of the
+list. This is needed when a word the user typed is also a hashtag, because
+it ensures that the tag is then the first entry in the list.</p>]]></long-description>
+        <tag line="68" name="param" description="the first string" type="string" variable="$a">
+          <type by_reference="false">string</type>
+        </tag>
+        <tag line="68" name="param" description="the second string" type="string" variable="$b">
+          <type by_reference="false">string</type>
+        </tag>
+        <tag line="68" name="return" description="" type="boolean">
+          <type by_reference="false">boolean</type>
+        </tag>
+      </docblock>
+      <argument line="77">
+        <name>$a</name>
+        <default><![CDATA[]]></default>
+        <type/>
+      </argument>
+      <argument line="77">
+        <name>$b</name>
+        <default><![CDATA[]]></default>
+        <type/>
+      </argument>
+    </function>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file tags.php</error>
+    </parse_markers>
+  </file>
+  <file path="send.php" hash="ad6622e4534ae5dd2d0e745702b7eb81" package="Default">
+    <include line="6" type="Include" package="Default">
+      <name>EpiTwitter/EpiCurl.php</name>
+      <docblock line="2">
+        <description><![CDATA[this file is called if a user decides to post a status update.]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </include>
+    <include line="7" type="Include" package="Default">
+      <name>EpiTwitter/EpiOAuth.php</name>
+    </include>
+    <include line="8" type="Include" package="Default">
+      <name>EpiTwitter/EpiTwitter.php</name>
+    </include>
+    <include line="9" type="Include" package="Default">
+      <name>config.php</name>
+    </include>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file send.php</error>
+    </parse_markers>
+  </file>
+  <file path="config.php" hash="362a4e724be321868eb7280cbe179d70" package="Default">
+    <docblock line="3">
+      <description><![CDATA[This is the main configuration file.]]></description>
+      <long-description><![CDATA[]]></long-description>
+    </docblock>
+    <constant namespace="global" line="10" package="Default">
+      <name>CONSUMER_KEY</name>
+      <full_name>\CONSUMER_KEY</full_name>
+      <value><![CDATA['FkfCY0lvePEc0pdJtwgA1A']]></value>
+      <docblock line="7">
+        <description><![CDATA[Consumer key and secret for the twitter-O-auth user authorization]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="12" package="Default">
+      <name>CONSUMER_SECRET</name>
+      <full_name>\CONSUMER_SECRET</full_name>
+      <value><![CDATA['wvEBZg7SjbUM4IbrmMPsiA3TEy1fIMIq8wSEJ8']]></value>
+    </constant>
+    <constant namespace="global" line="18" package="Default">
+      <name>TWEET_LIMIT</name>
+      <full_name>\TWEET_LIMIT</full_name>
+      <value><![CDATA[100]]></value>
+      <docblock line="14">
+        <description><![CDATA[the max amount of tweets that the solr-server will return to
+php.]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="24" package="Default">
+      <name>TAG_LIMIT</name>
+      <full_name>\TAG_LIMIT</full_name>
+      <value><![CDATA[10]]></value>
+      <docblock line="20">
+        <description><![CDATA[The amount of hashtags that will be returned to the application
+via Ajax.]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="29" package="Default">
+      <name>AUTOCOMPLETE_LIMIT</name>
+      <full_name>\AUTOCOMPLETE_LIMIT</full_name>
+      <value><![CDATA[10]]></value>
+      <docblock line="26">
+        <description><![CDATA[how many tags will be shown for autocompletion]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="34" package="Default">
+      <name>SOLR_URL</name>
+      <full_name>\SOLR_URL</full_name>
+      <value><![CDATA["http://localhost:8983/solr/select/"]]></value>
+      <docblock line="31">
+        <description><![CDATA[The url to the solr server]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="39" package="Default">
+      <name>TIMELINE_LIMIT</name>
+      <full_name>\TIMELINE_LIMIT</full_name>
+      <value><![CDATA[5]]></value>
+      <docblock line="36">
+        <description><![CDATA[The max amount of tweets appearing in the timeline on the left]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="45" package="Default">
+      <name>FACTOR_SCORE</name>
+      <full_name>\FACTOR_SCORE</full_name>
+      <value><![CDATA[0.8]]></value>
+      <docblock line="41">
+        <description><![CDATA[The factor the SOLR score will be multiplied with in the default
+algorithm.]]></description>
+        <long-description><![CDATA[<p>This is needed for the total score calculation.</p>]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="51" package="Default">
+      <name>FACTOR_COUNT</name>
+      <full_name>\FACTOR_COUNT</full_name>
+      <value><![CDATA[0.2]]></value>
+      <docblock line="47">
+        <description><![CDATA[The factor the tag occurance will be multiplied with in the default
+algorithm.]]></description>
+        <long-description><![CDATA[<p>This is needed for the total score calculation.</p>]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="58" package="Default">
+      <name>TMP_LOCATION</name>
+      <full_name>\TMP_LOCATION</full_name>
+      <value><![CDATA["/tmp/tmp_outut.json"]]></value>
+      <docblock line="54">
+        <description><![CDATA[Location for the temporary json file that will be created if update.php is
+called.]]></description>
+        <long-description><![CDATA[<p>This is needed for updating the Solr index</p>]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="63" package="Default">
+      <name>LOG_LOCATION</name>
+      <full_name>\LOG_LOCATION</full_name>
+      <value><![CDATA["/tmp/hashomender.log"]]></value>
+      <docblock line="60">
+        <description><![CDATA[Location for logs that are made by update.php]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="69" package="Default">
+      <name>AUTOCOMPLETE_TIMEOUT</name>
+      <full_name>\AUTOCOMPLETE_TIMEOUT</full_name>
+      <value><![CDATA[10]]></value>
+      <docblock line="65">
+        <description><![CDATA[How many times this function will fetch more tags if the final amount is not
+reached yet]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+    <constant namespace="global" line="74" package="Default">
+      <name>AUTOCOMPLETE_FETCH_SIZE</name>
+      <full_name>\AUTOCOMPLETE_FETCH_SIZE</full_name>
+      <value><![CDATA[20]]></value>
+      <docblock line="71">
+        <description><![CDATA[How many tags will be fetched at once]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </constant>
+  </file>
+  <file path="EpiTwitter/EpiTwitter.php" hash="02dbe4e4dbe6f8684856162dc8c80a2b" package="Default">
+    <class final="false" abstract="false" namespace="global" line="12" package="Default">
+      <extends>\EpiOAuth</extends>
+      <name>EpiTwitter</name>
+      <full_name>\EpiTwitter</full_name>
+      <constant namespace="global" line="14" package="Default">
+        <name>EPITWITTER_SIGNATURE_METHOD</name>
+        <full_name>EPITWITTER_SIGNATURE_METHOD</full_name>
+        <value><![CDATA['HMAC-SHA1']]></value>
+      </constant>
+      <constant namespace="global" line="15" package="Default">
+        <name>EPITWITTER_AUTH_OAUTH</name>
+        <full_name>EPITWITTER_AUTH_OAUTH</full_name>
+        <value><![CDATA['oauth']]></value>
+      </constant>
+      <constant namespace="global" line="16" package="Default">
+        <name>EPITWITTER_AUTH_BASIC</name>
+        <full_name>EPITWITTER_AUTH_BASIC</full_name>
+        <value><![CDATA['basic']]></value>
+      </constant>
+      <property final="false" static="false" visibility="protected" line="17" namespace="global" package="Default">
+        <name>$requestTokenUrl</name>
+        <default><![CDATA['https://api.twitter.com/oauth/request_token']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="18" namespace="global" package="Default">
+        <name>$accessTokenUrl</name>
+        <default><![CDATA['https://api.twitter.com/oauth/access_token']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="19" namespace="global" package="Default">
+        <name>$authorizeUrl</name>
+        <default><![CDATA['https://api.twitter.com/oauth/authorize']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="20" namespace="global" package="Default">
+        <name>$authenticateUrl</name>
+        <default><![CDATA['https://api.twitter.com/oauth/authenticate']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="21" namespace="global" package="Default">
+        <name>$apiUrl</name>
+        <default><![CDATA['http://api.twitter.com']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="22" namespace="global" package="Default">
+        <name>$apiVersionedUrl</name>
+        <default><![CDATA['http://api.twitter.com']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="23" namespace="global" package="Default">
+        <name>$searchUrl</name>
+        <default><![CDATA['http://search.twitter.com']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="24" namespace="global" package="Default">
+        <name>$userAgent</name>
+        <default><![CDATA['EpiTwitter (http://github.com/jmathai/twitter-async/tree/)']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="25" namespace="global" package="Default">
+        <name>$apiVersion</name>
+        <default><![CDATA['1']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="26" namespace="global" package="Default">
+        <name>$isAsynchronous</name>
+        <default><![CDATA[false]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="29" package="Default">
+        <name>delete</name>
+        <full_name>delete</full_name>
+        <argument line="29">
+          <name>$endpoint</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="29">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="34" package="Default">
+        <name>get</name>
+        <full_name>get</full_name>
+        <argument line="34">
+          <name>$endpoint</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="34">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="39" package="Default">
+        <name>post</name>
+        <full_name>post</full_name>
+        <argument line="39">
+          <name>$endpoint</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="39">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="45" package="Default">
+        <name>delete_basic</name>
+        <full_name>delete_basic</full_name>
+        <argument line="45">
+          <name>$endpoint</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="45">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="45">
+          <name>$username</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="45">
+          <name>$password</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="50" package="Default">
+        <name>get_basic</name>
+        <full_name>get_basic</full_name>
+        <argument line="50">
+          <name>$endpoint</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="50">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="50">
+          <name>$username</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="50">
+          <name>$password</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="55" package="Default">
+        <name>post_basic</name>
+        <full_name>post_basic</full_name>
+        <argument line="55">
+          <name>$endpoint</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="55">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="55">
+          <name>$username</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="55">
+          <name>$password</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="60" package="Default">
+        <name>useApiVersion</name>
+        <full_name>useApiVersion</full_name>
+        <argument line="60">
+          <name>$version</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="65" package="Default">
+        <name>useAsynchronous</name>
+        <full_name>useAsynchronous</full_name>
+        <argument line="65">
+          <name>$async</name>
+          <default><![CDATA[true]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="70" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <argument line="70">
+          <name>$consumerKey</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="70">
+          <name>$consumerSecret</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="70">
+          <name>$oauthToken</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="70">
+          <name>$oauthTokenSecret</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="76" package="Default">
+        <name>__call</name>
+        <full_name>__call</full_name>
+        <argument line="76">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="76">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="global" line="104" package="Default">
+        <name>getApiUrl</name>
+        <full_name>getApiUrl</full_name>
+        <argument line="104">
+          <name>$endpoint</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="global" line="114" package="Default">
+        <name>request</name>
+        <full_name>request</full_name>
+        <argument line="114">
+          <name>$method</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="114">
+          <name>$endpoint</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="114">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="global" line="124" package="Default">
+        <name>request_basic</name>
+        <full_name>request_basic</full_name>
+        <argument line="124">
+          <name>$method</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="124">
+          <name>$endpoint</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="124">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="124">
+          <name>$username</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="124">
+          <name>$password</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="152" package="Default">
+      <extends/>
+      <implements>\ArrayAccess</implements>
+      <implements>\Countable</implements>
+      <implements>\IteratorAggregate</implements>
+      <name>EpiTwitterJson</name>
+      <full_name>\EpiTwitterJson</full_name>
+      <property final="false" static="false" visibility="private" line="154" namespace="global" package="Default">
+        <name>$debug</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="155" namespace="global" package="Default">
+        <name>$__resp</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="156" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <argument line="156">
+          <name>$response</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="156">
+          <name>$debug</name>
+          <default><![CDATA[false]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="163" package="Default">
+        <name>__destruct</name>
+        <full_name>__destruct</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="169" package="Default">
+        <name>getIterator</name>
+        <full_name>getIterator</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="179" package="Default">
+        <name>count</name>
+        <full_name>count</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="186" package="Default">
+        <name>offsetSet</name>
+        <full_name>offsetSet</full_name>
+        <argument line="186">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="186">
+          <name>$value</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="192" package="Default">
+        <name>offsetExists</name>
+        <full_name>offsetExists</full_name>
+        <argument line="192">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="198" package="Default">
+        <name>offsetUnset</name>
+        <full_name>offsetUnset</full_name>
+        <argument line="198">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="204" package="Default">
+        <name>offsetGet</name>
+        <full_name>offsetGet</full_name>
+        <argument line="204">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="209" package="Default">
+        <name>__get</name>
+        <full_name>__get</full_name>
+        <argument line="209">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="238" package="Default">
+        <name>__isset</name>
+        <full_name>__isset</full_name>
+        <argument line="238">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="245" package="Default">
+      <extends>\Exception</extends>
+      <name>EpiTwitterException</name>
+      <full_name>\EpiTwitterException</full_name>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="247" package="Default">
+        <name>raise</name>
+        <full_name>raise</full_name>
+        <argument line="247">
+          <name>$response</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="247">
+          <name>$debug</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="275" package="Default">
+      <extends>\EpiTwitterException</extends>
+      <name>EpiTwitterBadRequestException</name>
+      <full_name>\EpiTwitterBadRequestException</full_name>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="276" package="Default">
+      <extends>\EpiTwitterException</extends>
+      <name>EpiTwitterNotAuthorizedException</name>
+      <full_name>\EpiTwitterNotAuthorizedException</full_name>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="277" package="Default">
+      <extends>\EpiTwitterException</extends>
+      <name>EpiTwitterForbiddenException</name>
+      <full_name>\EpiTwitterForbiddenException</full_name>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="278" package="Default">
+      <extends>\EpiTwitterException</extends>
+      <name>EpiTwitterNotFoundException</name>
+      <full_name>\EpiTwitterNotFoundException</full_name>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="279" package="Default">
+      <extends>\EpiTwitterException</extends>
+      <name>EpiTwitterNotAcceptableException</name>
+      <full_name>\EpiTwitterNotAcceptableException</full_name>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="280" package="Default">
+      <extends>\EpiTwitterException</extends>
+      <name>EpiTwitterEnhanceYourCalmException</name>
+      <full_name>\EpiTwitterEnhanceYourCalmException</full_name>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="281" package="Default">
+      <extends>\EpiTwitterException</extends>
+      <name>EpiTwitterInternalServerException</name>
+      <full_name>\EpiTwitterInternalServerException</full_name>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="282" package="Default">
+      <extends>\EpiTwitterException</extends>
+      <name>EpiTwitterBadGatewayException</name>
+      <full_name>\EpiTwitterBadGatewayException</full_name>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="283" package="Default">
+      <extends>\EpiTwitterException</extends>
+      <name>EpiTwitterServiceUnavailableException</name>
+      <full_name>\EpiTwitterServiceUnavailableException</full_name>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file EpiTwitter/EpiTwitter.php</error>
+      <error line="12" code="50000">No DocBlock was found for \EpiTwitter</error>
+      <error line="17" code="50018">No DocBlock was found for property $requestTokenUrl</error>
+      <error line="18" code="50018">No DocBlock was found for property $accessTokenUrl</error>
+      <error line="19" code="50018">No DocBlock was found for property $authorizeUrl</error>
+      <error line="20" code="50018">No DocBlock was found for property $authenticateUrl</error>
+      <error line="21" code="50018">No DocBlock was found for property $apiUrl</error>
+      <error line="22" code="50018">No DocBlock was found for property $apiVersionedUrl</error>
+      <error line="23" code="50018">No DocBlock was found for property $searchUrl</error>
+      <error line="24" code="50018">No DocBlock was found for property $userAgent</error>
+      <error line="25" code="50018">No DocBlock was found for property $apiVersion</error>
+      <error line="26" code="50018">No DocBlock was found for property $isAsynchronous</error>
+      <error line="29" code="50010">No DocBlock was found for method delete()</error>
+      <error line="34" code="50010">No DocBlock was found for method get()</error>
+      <error line="39" code="50010">No DocBlock was found for method post()</error>
+      <error line="45" code="50010">No DocBlock was found for method delete_basic()</error>
+      <error line="50" code="50010">No DocBlock was found for method get_basic()</error>
+      <error line="55" code="50010">No DocBlock was found for method post_basic()</error>
+      <error line="60" code="50010">No DocBlock was found for method useApiVersion()</error>
+      <error line="65" code="50010">No DocBlock was found for method useAsynchronous()</error>
+      <error line="70" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="76" code="50010">No DocBlock was found for method __call()</error>
+      <error line="104" code="50010">No DocBlock was found for method getApiUrl()</error>
+      <error line="114" code="50010">No DocBlock was found for method request()</error>
+      <error line="124" code="50010">No DocBlock was found for method request_basic()</error>
+      <error line="152" code="50000">No DocBlock was found for \EpiTwitterJson</error>
+      <error line="154" code="50018">No DocBlock was found for property $debug</error>
+      <error line="155" code="50018">No DocBlock was found for property $__resp</error>
+      <error line="156" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="163" code="50010">No DocBlock was found for method __destruct()</error>
+      <error line="169" code="50010">No DocBlock was found for method getIterator()</error>
+      <error line="179" code="50010">No DocBlock was found for method count()</error>
+      <error line="186" code="50010">No DocBlock was found for method offsetSet()</error>
+      <error line="192" code="50010">No DocBlock was found for method offsetExists()</error>
+      <error line="198" code="50010">No DocBlock was found for method offsetUnset()</error>
+      <error line="204" code="50010">No DocBlock was found for method offsetGet()</error>
+      <error line="209" code="50010">No DocBlock was found for method __get()</error>
+      <error line="238" code="50010">No DocBlock was found for method __isset()</error>
+      <error line="245" code="50000">No DocBlock was found for \EpiTwitterException</error>
+      <error line="247" code="50010">No DocBlock was found for method raise()</error>
+      <error line="275" code="50000">No DocBlock was found for \EpiTwitterBadRequestException</error>
+      <error line="276" code="50000">No DocBlock was found for \EpiTwitterNotAuthorizedException</error>
+      <error line="277" code="50000">No DocBlock was found for \EpiTwitterForbiddenException</error>
+      <error line="278" code="50000">No DocBlock was found for \EpiTwitterNotFoundException</error>
+      <error line="279" code="50000">No DocBlock was found for \EpiTwitterNotAcceptableException</error>
+      <error line="280" code="50000">No DocBlock was found for \EpiTwitterEnhanceYourCalmException</error>
+      <error line="281" code="50000">No DocBlock was found for \EpiTwitterInternalServerException</error>
+      <error line="282" code="50000">No DocBlock was found for \EpiTwitterBadGatewayException</error>
+      <error line="283" code="50000">No DocBlock was found for \EpiTwitterServiceUnavailableException</error>
+    </parse_markers>
+  </file>
+  <file path="EpiTwitter/EpiCurl.php" hash="f6dca7bbb802f77bcd3001b530a2e26d" package="Default">
+    <class final="false" abstract="false" namespace="global" line="2" package="Default">
+      <extends/>
+      <name>EpiCurl</name>
+      <full_name>\EpiCurl</full_name>
+      <constant namespace="global" line="4" package="Default">
+        <name>timeout</name>
+        <full_name>timeout</full_name>
+        <value><![CDATA[3]]></value>
+      </constant>
+      <property final="false" static="true" visibility="public" line="5" namespace="global" package="Default">
+        <name>$inst</name>
+        <default><![CDATA[null]]></default>
+      </property>
+      <property final="false" static="true" visibility="public" line="6" namespace="global" package="Default">
+        <name>$singleton</name>
+        <default><![CDATA[0]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="7" namespace="global" package="Default">
+        <name>$mc</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="8" namespace="global" package="Default">
+        <name>$msgs</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="9" namespace="global" package="Default">
+        <name>$running</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="10" namespace="global" package="Default">
+        <name>$execStatus</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="11" namespace="global" package="Default">
+        <name>$selectStatus</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="12" namespace="global" package="Default">
+        <name>$sleepIncrement</name>
+        <default><![CDATA[1.1]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="13" namespace="global" package="Default">
+        <name>$requests</name>
+        <default><![CDATA[array()]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="14" namespace="global" package="Default">
+        <name>$responses</name>
+        <default><![CDATA[array()]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="15" namespace="global" package="Default">
+        <name>$properties</name>
+        <default><![CDATA[array()]]></default>
+      </property>
+      <property final="false" static="true" visibility="private" line="16" namespace="global" package="Default">
+        <name>$timers</name>
+        <default><![CDATA[array()]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="18" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="35" package="Default">
+        <name>addEasyCurl</name>
+        <full_name>addEasyCurl</full_name>
+        <argument line="35">
+          <name>$ch</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="46" package="Default">
+        <name>addCurl</name>
+        <full_name>addCurl</full_name>
+        <argument line="46">
+          <name>$ch</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="70" package="Default">
+        <name>getResult</name>
+        <full_name>getResult</full_name>
+        <argument line="70">
+          <name>$key</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="106" package="Default">
+        <name>getSequence</name>
+        <full_name>getSequence</full_name>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="111" package="Default">
+        <name>getTimers</name>
+        <full_name>getTimers</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="global" line="116" package="Default">
+        <name>getKey</name>
+        <full_name>getKey</full_name>
+        <argument line="116">
+          <name>$ch</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="global" line="121" package="Default">
+        <name>headerCallback</name>
+        <full_name>headerCallback</full_name>
+        <argument line="121">
+          <name>$ch</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="121">
+          <name>$header</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="global" line="134" package="Default">
+        <name>storeResponses</name>
+        <full_name>storeResponses</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="global" line="142" package="Default">
+        <name>storeResponse</name>
+        <full_name>storeResponse</full_name>
+        <argument line="142">
+          <name>$done</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="142">
+          <name>$isAsynchronous</name>
+          <default><![CDATA[true]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="global" line="160" package="Default">
+        <name>startTimer</name>
+        <full_name>startTimer</full_name>
+        <argument line="160">
+          <name>$key</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="global" line="165" package="Default">
+        <name>stopTimer</name>
+        <full_name>stopTimer</full_name>
+        <argument line="165">
+          <name>$key</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="165">
+          <name>$done</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="173" package="Default">
+        <name>getInstance</name>
+        <full_name>getInstance</full_name>
+      </method>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="185" package="Default">
+      <extends/>
+      <name>EpiCurlManager</name>
+      <full_name>\EpiCurlManager</full_name>
+      <property final="false" static="false" visibility="private" line="187" namespace="global" package="Default">
+        <name>$key</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="private" line="188" namespace="global" package="Default">
+        <name>$epiCurl</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="190" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <argument line="190">
+          <name>$key</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="196" package="Default">
+        <name>__get</name>
+        <full_name>__get</full_name>
+        <argument line="196">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="202" package="Default">
+        <name>__isset</name>
+        <full_name>__isset</full_name>
+        <argument line="202">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file EpiTwitter/EpiCurl.php</error>
+      <error line="2" code="50000">No DocBlock was found for \EpiCurl</error>
+      <error line="5" code="50018">No DocBlock was found for property $inst</error>
+      <error line="6" code="50018">No DocBlock was found for property $singleton</error>
+      <error line="7" code="50018">No DocBlock was found for property $mc</error>
+      <error line="8" code="50018">No DocBlock was found for property $msgs</error>
+      <error line="9" code="50018">No DocBlock was found for property $running</error>
+      <error line="10" code="50018">No DocBlock was found for property $execStatus</error>
+      <error line="11" code="50018">No DocBlock was found for property $selectStatus</error>
+      <error line="12" code="50018">No DocBlock was found for property $sleepIncrement</error>
+      <error line="13" code="50018">No DocBlock was found for property $requests</error>
+      <error line="14" code="50018">No DocBlock was found for property $responses</error>
+      <error line="15" code="50018">No DocBlock was found for property $properties</error>
+      <error line="16" code="50018">No DocBlock was found for property $timers</error>
+      <error line="18" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="35" code="50010">No DocBlock was found for method addEasyCurl()</error>
+      <error line="46" code="50010">No DocBlock was found for method addCurl()</error>
+      <error line="70" code="50010">No DocBlock was found for method getResult()</error>
+      <error line="106" code="50010">No DocBlock was found for method getSequence()</error>
+      <error line="111" code="50010">No DocBlock was found for method getTimers()</error>
+      <error line="116" code="50010">No DocBlock was found for method getKey()</error>
+      <error line="121" code="50010">No DocBlock was found for method headerCallback()</error>
+      <error line="134" code="50010">No DocBlock was found for method storeResponses()</error>
+      <error line="142" code="50010">No DocBlock was found for method storeResponse()</error>
+      <error line="160" code="50010">No DocBlock was found for method startTimer()</error>
+      <error line="165" code="50010">No DocBlock was found for method stopTimer()</error>
+      <error line="173" code="50010">No DocBlock was found for method getInstance()</error>
+      <error line="185" code="50000">No DocBlock was found for \EpiCurlManager</error>
+      <error line="187" code="50018">No DocBlock was found for property $key</error>
+      <error line="188" code="50018">No DocBlock was found for property $epiCurl</error>
+      <error line="190" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="196" code="50010">No DocBlock was found for method __get()</error>
+      <error line="202" code="50010">No DocBlock was found for method __isset()</error>
+    </parse_markers>
+  </file>
+  <file path="EpiTwitter/EpiOAuth.php" hash="65c2ffec13c3144c887ab37f88292769" package="Default">
+    <class final="false" abstract="false" namespace="global" line="2" package="Default">
+      <extends/>
+      <name>EpiOAuth</name>
+      <full_name>\EpiOAuth</full_name>
+      <property final="false" static="false" visibility="public" line="4" namespace="global" package="Default">
+        <name>$version</name>
+        <default><![CDATA['1.0']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="6" namespace="global" package="Default">
+        <name>$requestTokenUrl</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="7" namespace="global" package="Default">
+        <name>$accessTokenUrl</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="8" namespace="global" package="Default">
+        <name>$authenticateUrl</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="9" namespace="global" package="Default">
+        <name>$authorizeUrl</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="10" namespace="global" package="Default">
+        <name>$consumerKey</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="11" namespace="global" package="Default">
+        <name>$consumerSecret</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="12" namespace="global" package="Default">
+        <name>$token</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="13" namespace="global" package="Default">
+        <name>$tokenSecret</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="14" namespace="global" package="Default">
+        <name>$callback</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="15" namespace="global" package="Default">
+        <name>$signatureMethod</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="16" namespace="global" package="Default">
+        <name>$debug</name>
+        <default><![CDATA[false]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="17" namespace="global" package="Default">
+        <name>$useSSL</name>
+        <default><![CDATA[false]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="18" namespace="global" package="Default">
+        <name>$followLocation</name>
+        <default><![CDATA[false]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="19" namespace="global" package="Default">
+        <name>$headers</name>
+        <default><![CDATA[array()]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="20" namespace="global" package="Default">
+        <name>$userAgent</name>
+        <default><![CDATA['EpiOAuth (http://github.com/jmathai/twitter-async/tree/)']]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="21" namespace="global" package="Default">
+        <name>$connectionTimeout</name>
+        <default><![CDATA[5]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="22" namespace="global" package="Default">
+        <name>$requestTimeout</name>
+        <default><![CDATA[30]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="24" package="Default">
+        <name>addHeader</name>
+        <full_name>addHeader</full_name>
+        <argument line="24">
+          <name>$header</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="32" package="Default">
+        <name>getAccessToken</name>
+        <full_name>getAccessToken</full_name>
+        <argument line="32">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="42" package="Default">
+        <name>getAuthenticateUrl</name>
+        <full_name>getAuthenticateUrl</full_name>
+        <argument line="42">
+          <name>$token</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="42">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="50" package="Default">
+        <name>getAuthorizeUrl</name>
+        <full_name>getAuthorizeUrl</full_name>
+        <argument line="50">
+          <name>$token</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="50">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="58" package="Default">
+        <name>getAuthorizationUrl</name>
+        <full_name>getAuthorizationUrl</full_name>
+        <argument line="58">
+          <name>$token</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="63" package="Default">
+        <name>getRequestToken</name>
+        <full_name>getRequestToken</full_name>
+        <argument line="63">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="73" package="Default">
+        <name>getUrl</name>
+        <full_name>getUrl</full_name>
+        <argument line="73">
+          <name>$url</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="81" package="Default">
+        <name>httpRequest</name>
+        <full_name>httpRequest</full_name>
+        <argument line="81">
+          <name>$method</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="81">
+          <name>$url</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="81">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="81">
+          <name>$isMultipart</name>
+          <default><![CDATA[false]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="104" package="Default">
+        <name>setDebug</name>
+        <full_name>setDebug</full_name>
+        <argument line="104">
+          <name>$bool</name>
+          <default><![CDATA[false]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="109" package="Default">
+        <name>setFollowLocation</name>
+        <full_name>setFollowLocation</full_name>
+        <argument line="109">
+          <name>$bool</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="114" package="Default">
+        <name>setTimeout</name>
+        <full_name>setTimeout</full_name>
+        <argument line="114">
+          <name>$requestTimeout</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="114">
+          <name>$connectionTimeout</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="122" package="Default">
+        <name>setToken</name>
+        <full_name>setToken</full_name>
+        <argument line="122">
+          <name>$token</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="122">
+          <name>$secret</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="128" package="Default">
+        <name>setCallback</name>
+        <full_name>setCallback</full_name>
+        <argument line="128">
+          <name>$callback</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="133" package="Default">
+        <name>useSSL</name>
+        <full_name>useSSL</full_name>
+        <argument line="133">
+          <name>$use</name>
+          <default><![CDATA[false]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="138" package="Default">
+        <name>addDefaultHeaders</name>
+        <full_name>addDefaultHeaders</full_name>
+        <argument line="138">
+          <name>$url</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="138">
+          <name>$oauthHeaders</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="152" package="Default">
+        <name>buildHttpQueryRaw</name>
+        <full_name>buildHttpQueryRaw</full_name>
+        <argument line="152">
+          <name>$params</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="161" package="Default">
+        <name>curlInit</name>
+        <full_name>curlInit</full_name>
+        <argument line="161">
+          <name>$url</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="189" package="Default">
+        <name>emptyHeaders</name>
+        <full_name>emptyHeaders</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="194" package="Default">
+        <name>encode_rfc3986</name>
+        <full_name>encode_rfc3986</full_name>
+        <argument line="194">
+          <name>$string</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="199" package="Default">
+        <name>generateNonce</name>
+        <full_name>generateNonce</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="209" package="Default">
+        <name>generateSignature</name>
+        <full_name>generateSignature</full_name>
+        <argument line="209">
+          <name>$method</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="209">
+          <name>$url</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="209">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="225" package="Default">
+        <name>executeCurl</name>
+        <full_name>executeCurl</full_name>
+        <argument line="225">
+          <name>$ch</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="233" package="Default">
+        <name>httpDelete</name>
+        <full_name>httpDelete</full_name>
+        <argument line="233">
+          <name>$url</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="233">
+          <name>$params</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="243" package="Default">
+        <name>httpGet</name>
+        <full_name>httpGet</full_name>
+        <argument line="243">
+          <name>$url</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="243">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="262" package="Default">
+        <name>httpPost</name>
+        <full_name>httpPost</full_name>
+        <argument line="262">
+          <name>$url</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="262">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="262">
+          <name>$isMultipart</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="279" package="Default">
+        <name>normalizeUrl</name>
+        <full_name>normalizeUrl</full_name>
+        <argument line="279">
+          <name>$url</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="300" package="Default">
+        <name>isMultipart</name>
+        <full_name>isMultipart</full_name>
+        <argument line="300">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="313" package="Default">
+        <name>prepareParameters</name>
+        <full_name>prepareParameters</full_name>
+        <argument line="313">
+          <name>$method</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="313">
+          <name>$url</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+        <argument line="313">
+          <name>$params</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="global" line="368" package="Default">
+        <name>signString</name>
+        <full_name>signString</full_name>
+        <argument line="368">
+          <name>$string</name>
+          <default><![CDATA[null]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="382" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <argument line="382">
+          <name>$consumerKey</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="382">
+          <name>$consumerSecret</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="382">
+          <name>$signatureMethod</name>
+          <default><![CDATA['HMAC-SHA1']]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="391" package="Default">
+      <extends/>
+      <name>EpiOAuthResponse</name>
+      <full_name>\EpiOAuthResponse</full_name>
+      <property final="false" static="false" visibility="private" line="393" namespace="global" package="Default">
+        <name>$__resp</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="394" namespace="global" package="Default">
+        <name>$debug</name>
+        <default><![CDATA[false]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="396" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <argument line="396">
+          <name>$resp</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="401" package="Default">
+        <name>__get</name>
+        <full_name>__get</full_name>
+        <argument line="401">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="415" package="Default">
+        <name>__toString</name>
+        <full_name>__toString</full_name>
+      </method>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="421" package="Default">
+      <extends>\Exception</extends>
+      <name>EpiOAuthException</name>
+      <full_name>\EpiOAuthException</full_name>
+      <method final="false" abstract="false" static="true" visibility="public" namespace="global" line="423" package="Default">
+        <name>raise</name>
+        <full_name>raise</full_name>
+        <argument line="423">
+          <name>$response</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="423">
+          <name>$debug</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="438" package="Default">
+      <extends>\EpiOAuthException</extends>
+      <name>EpiOAuthBadRequestException</name>
+      <full_name>\EpiOAuthBadRequestException</full_name>
+    </class>
+    <class final="false" abstract="false" namespace="global" line="439" package="Default">
+      <extends>\EpiOAuthException</extends>
+      <name>EpiOAuthUnauthorizedException</name>
+      <full_name>\EpiOAuthUnauthorizedException</full_name>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file EpiTwitter/EpiOAuth.php</error>
+      <error line="2" code="50000">No DocBlock was found for \EpiOAuth</error>
+      <error line="4" code="50018">No DocBlock was found for property $version</error>
+      <error line="6" code="50018">No DocBlock was found for property $requestTokenUrl</error>
+      <error line="7" code="50018">No DocBlock was found for property $accessTokenUrl</error>
+      <error line="8" code="50018">No DocBlock was found for property $authenticateUrl</error>
+      <error line="9" code="50018">No DocBlock was found for property $authorizeUrl</error>
+      <error line="10" code="50018">No DocBlock was found for property $consumerKey</error>
+      <error line="11" code="50018">No DocBlock was found for property $consumerSecret</error>
+      <error line="12" code="50018">No DocBlock was found for property $token</error>
+      <error line="13" code="50018">No DocBlock was found for property $tokenSecret</error>
+      <error line="14" code="50018">No DocBlock was found for property $callback</error>
+      <error line="15" code="50018">No DocBlock was found for property $signatureMethod</error>
+      <error line="16" code="50018">No DocBlock was found for property $debug</error>
+      <error line="17" code="50018">No DocBlock was found for property $useSSL</error>
+      <error line="18" code="50018">No DocBlock was found for property $followLocation</error>
+      <error line="19" code="50018">No DocBlock was found for property $headers</error>
+      <error line="20" code="50018">No DocBlock was found for property $userAgent</error>
+      <error line="21" code="50018">No DocBlock was found for property $connectionTimeout</error>
+      <error line="22" code="50018">No DocBlock was found for property $requestTimeout</error>
+      <error line="24" code="50010">No DocBlock was found for method addHeader()</error>
+      <error line="32" code="50010">No DocBlock was found for method getAccessToken()</error>
+      <error line="42" code="50010">No DocBlock was found for method getAuthenticateUrl()</error>
+      <error line="50" code="50010">No DocBlock was found for method getAuthorizeUrl()</error>
+      <error line="58" code="50010">No DocBlock was found for method getAuthorizationUrl()</error>
+      <error line="63" code="50010">No DocBlock was found for method getRequestToken()</error>
+      <error line="73" code="50010">No DocBlock was found for method getUrl()</error>
+      <error line="81" code="50010">No DocBlock was found for method httpRequest()</error>
+      <error line="104" code="50010">No DocBlock was found for method setDebug()</error>
+      <error line="109" code="50010">No DocBlock was found for method setFollowLocation()</error>
+      <error line="114" code="50010">No DocBlock was found for method setTimeout()</error>
+      <error line="122" code="50010">No DocBlock was found for method setToken()</error>
+      <error line="128" code="50010">No DocBlock was found for method setCallback()</error>
+      <error line="133" code="50010">No DocBlock was found for method useSSL()</error>
+      <error line="138" code="50010">No DocBlock was found for method addDefaultHeaders()</error>
+      <error line="152" code="50010">No DocBlock was found for method buildHttpQueryRaw()</error>
+      <error line="161" code="50010">No DocBlock was found for method curlInit()</error>
+      <error line="189" code="50010">No DocBlock was found for method emptyHeaders()</error>
+      <error line="194" code="50010">No DocBlock was found for method encode_rfc3986()</error>
+      <error line="199" code="50010">No DocBlock was found for method generateNonce()</error>
+      <error line="209" code="50010">No DocBlock was found for method generateSignature()</error>
+      <error line="225" code="50010">No DocBlock was found for method executeCurl()</error>
+      <error line="233" code="50010">No DocBlock was found for method httpDelete()</error>
+      <error line="243" code="50010">No DocBlock was found for method httpGet()</error>
+      <error line="262" code="50010">No DocBlock was found for method httpPost()</error>
+      <error line="279" code="50010">No DocBlock was found for method normalizeUrl()</error>
+      <error line="300" code="50010">No DocBlock was found for method isMultipart()</error>
+      <error line="313" code="50010">No DocBlock was found for method prepareParameters()</error>
+      <error line="368" code="50010">No DocBlock was found for method signString()</error>
+      <error line="382" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="391" code="50000">No DocBlock was found for \EpiOAuthResponse</error>
+      <error line="393" code="50018">No DocBlock was found for property $__resp</error>
+      <error line="394" code="50018">No DocBlock was found for property $debug</error>
+      <error line="396" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="401" code="50010">No DocBlock was found for method __get()</error>
+      <error line="415" code="50010">No DocBlock was found for method __toString()</error>
+      <error line="421" code="50000">No DocBlock was found for \EpiOAuthException</error>
+      <error line="423" code="50010">No DocBlock was found for method raise()</error>
+      <error line="438" code="50000">No DocBlock was found for \EpiOAuthBadRequestException</error>
+      <error line="439" code="50000">No DocBlock was found for \EpiOAuthUnauthorizedException</error>
+    </parse_markers>
+  </file>
+  <file path="main.php" hash="50c12178b047150a1fe8879daf229670" package="Default">
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file main.php</error>
+    </parse_markers>
+  </file>
+  <file path="index.php" hash="665da72454945a9cb184fb16a431f504" package="Default">
+    <include line="3" type="Require Once" package="Default">
+      <name>config.php</name>
+    </include>
+    <include line="4" type="Require Once" package="Default">
+      <name>EpiTwitter/EpiCurl.php</name>
+    </include>
+    <include line="5" type="Require Once" package="Default">
+      <name>EpiTwitter/EpiOAuth.php</name>
+    </include>
+    <include line="6" type="Require Once" package="Default">
+      <name>EpiTwitter/EpiTwitter.php</name>
+    </include>
+    <include line="8" type="Require Once" package="Default">
+      <name>algorithm_checker.php</name>
+    </include>
+    <include line="42" type="Include" package="Default">
+      <name>main.php</name>
+    </include>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file index.php</error>
+    </parse_markers>
+  </file>
+  <file path="timeline.php" hash="77340651ddc623772dd4987094f0d423" package="Default">
+    <include line="9" type="Include" package="Default">
+      <name>EpiTwitter/EpiCurl.php</name>
+      <docblock line="3">
+        <description><![CDATA[This file is called via AJAX and returns the
+timeline of the currently logged in user.]]></description>
+        <long-description><![CDATA[<p>The
+timeline is a set of the last recent tweets.</p>]]></long-description>
+      </docblock>
+    </include>
+    <include line="10" type="Include" package="Default">
+      <name>EpiTwitter/EpiOAuth.php</name>
+    </include>
+    <include line="11" type="Include" package="Default">
+      <name>EpiTwitter/EpiTwitter.php</name>
+    </include>
+    <include line="12" type="Include" package="Default">
+      <name>config.php</name>
+    </include>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file timeline.php</error>
+    </parse_markers>
+  </file>
+  <file path="logout.php" hash="cbe0c2fdf56b7f7bd70529a64c2dfa51" package="Default">
+    <docblock line="3">
+      <description><![CDATA[this file unsets the cookies (sets them to an invalid time) and then
+redirects to the login page.]]></description>
+      <long-description><![CDATA[]]></long-description>
+    </docblock>
+  </file>
+  <file path="flatten.php" hash="ac27d90a986a6516b5326df0a9b59f51" package="Default">
+    <docblock line="3">
+      <description><![CDATA[This file flattens the hierarchical tweet json file delivered by the
+mongoDB database.]]></description>
+      <long-description><![CDATA[<p>Flat structure is needed for SOLR, which can't handle
+hierarchies in its index.</p>]]></long-description>
+    </docblock>
+    <function namespace="global" line="37" package="Default">
+      <name>parseToXML</name>
+      <full_name>\parseToXML</full_name>
+      <docblock line="9">
+        <description><![CDATA[parses a json tweet input file and writes to a flattened xml file.]]></description>
+        <long-description><![CDATA[<p>The resulting XML will have following structure:<br></p>
+
+<pre><code>&lt;add&gt;<br>
+&emsp;&lt;doc&gt;<br>
+&emsp;&emsp;&lt;field name="id"&gt;0&lt;/field&gt;<br>
+&emsp;&emsp;&lt;field name="tweet"&gt;text #hashtag&lt;/field&gt;<br>
+&emsp;&emsp;&lt;field name="hashtags"&gt;hashtag&lt;/field&gt;<br>
+&emsp;&lt;/doc&gt;<br>
+&emsp;&lt;doc&gt;<br>
+&emsp;&emsp;&lt;field name="id"&gt;1&lt;/field&gt;<br>
+&emsp;&emsp;&lt;field name="tweet"&gt;no tags&lt;/field&gt;<br>
+&emsp;&emsp;&lt;field name="hashtags"&gt;&lt;/field&gt;<br>
+&emsp;&lt;/doc&gt;<br>
+...<br>
+&lt;/add&gt;<br>
+</code></pre>]]></long-description>
+        <tag line="9" name="param" description="The input file path" type="string" variable="$input">
+          <type by_reference="false">string</type>
+        </tag>
+        <tag line="9" name="param" description="The output file path" type="string" variable="$output">
+          <type by_reference="false">string</type>
+        </tag>
+        <tag line="9" name="param" description="optional limits the output to a certain number of tweets (useful for testing) if this parameter is omitted, all input tweets are processed." type="int" variable="$limit">
+          <type by_reference="false">int</type>
+        </tag>
+      </docblock>
+      <argument line="37">
+        <name>$input</name>
+        <default><![CDATA[]]></default>
+        <type/>
+      </argument>
+      <argument line="37">
+        <name>$output</name>
+        <default><![CDATA[]]></default>
+        <type/>
+      </argument>
+      <argument line="37">
+        <name>$limit</name>
+        <default><![CDATA[0]]></default>
+        <type/>
+      </argument>
+    </function>
+    <function namespace="global" line="92" package="Default">
+      <name>parseToJSON</name>
+      <full_name>\parseToJSON</full_name>
+      <docblock line="72">
+        <description><![CDATA[parses a json tweet input file and writes to a flattened json file.]]></description>
+        <long-description><![CDATA[<p>The resulting JSON will have following structure:</p>
+
+<pre><code><br>
+ [<br>
+ &emsp;{"id":0, "tweet":"text #hashtag", "hashtags":"hashtag"},<br>
+ &emsp;{"id":1, "tweet":"no tags", "hashtags":""}<br>
+...<br>
+ ]<br>
+</code></pre>]]></long-description>
+        <tag line="72" name="param" description="The input file path" type="string" variable="$input">
+          <type by_reference="false">string</type>
+        </tag>
+        <tag line="72" name="param" description="The output file path" type="string" variable="$output">
+          <type by_reference="false">string</type>
+        </tag>
+        <tag line="72" name="param" description="optional limits the output to a certain number of tweets (useful for testing) if this parameter is omitted, all input tweets are processed." type="int" variable="$limit">
+          <type by_reference="false">int</type>
+        </tag>
+      </docblock>
+      <argument line="92">
+        <name>$input</name>
+        <default><![CDATA[]]></default>
+        <type/>
+      </argument>
+      <argument line="92">
+        <name>$output</name>
+        <default><![CDATA[]]></default>
+        <type/>
+      </argument>
+      <argument line="92">
+        <name>$limit</name>
+        <default><![CDATA[0]]></default>
+        <type/>
+      </argument>
+    </function>
+  </file>
+  <file path="sign-in.php" hash="6d72c956b4f1b66eb1440ada81053df8" package="Default">
+    <include line="2" type="Include Once" package="Default">
+      <name>EpiTwitter/EpiCurl.php</name>
+    </include>
+    <include line="3" type="Include Once" package="Default">
+      <name>EpiTwitter/EpiOAuth.php</name>
+    </include>
+    <include line="4" type="Include Once" package="Default">
+      <name>EpiTwitter/EpiTwitter.php</name>
+    </include>
+    <include line="5" type="Include Once" package="Default">
+      <name>config.php</name>
+    </include>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file sign-in.php</error>
+    </parse_markers>
+  </file>
+  <file path="core/defaultFilter.php" hash="265b7052f63ca26a1b44321909aa0dab" package="Default">
+    <include line="3" type="Include Once" package="Default">
+      <name>config.php</name>
+    </include>
+    <class final="false" abstract="false" namespace="global" line="10" package="Default">
+      <extends/>
+      <implements>\iFilter</implements>
+      <name>defaultFilter</name>
+      <full_name>\defaultFilter</full_name>
+      <docblock line="5">
+        <description><![CDATA[Default implementation of the filter module.]]></description>
+        <long-description><![CDATA[<p>Just slices off excess tweets.</p>]]></long-description>
+        <tag line="5" name="author" description="benjamin"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="21" package="Default">
+        <name>filterTags</name>
+        <full_name>filterTags</full_name>
+        <docblock line="12">
+          <description><![CDATA[Slices off excess tags.]]></description>
+          <long-description><![CDATA[<p>See config.php for the amount of tags returned
+(TAG_LIMIT).</p>]]></long-description>
+          <tag line="12" name="param" description="The tag list to filter" type="string[]" variable="$tags">
+            <type by_reference="false">string[]</type>
+          </tag>
+          <tag line="12" name="return" description="The resulting tag list that has at most TAG_LIST elements." type="string[]">
+            <type by_reference="false">string[]</type>
+          </tag>
+        </docblock>
+        <argument line="21">
+          <name>$tags</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file core/defaultFilter.php</error>
+    </parse_markers>
+  </file>
+  <file path="core/defaultFetcher.php" hash="dd44d7ec403b7e326f4f60a869634fae" package="Default">
+    <class final="false" abstract="false" namespace="global" line="8" package="Default">
+      <extends/>
+      <implements>\iFetcher</implements>
+      <name>defaultFetcher</name>
+      <full_name>\defaultFetcher</full_name>
+      <docblock line="3">
+        <description><![CDATA[Default implementation of the fetching class]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="3" name="author" description="benjamin"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="17" package="Default">
+        <name>getTweets</name>
+        <full_name>getTweets</full_name>
+        <docblock line="10">
+          <description><![CDATA[fetches the json result object from the Solr server]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="10" name="param" description="the complete query for the server, it will be sent unmodified" type="string" variable="$query">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="10" name="return" description="a parsed json object of the result" type="\stdObj">
+            <type by_reference="false">\stdObj</type>
+          </tag>
+        </docblock>
+        <argument line="17">
+          <name>$query</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file core/defaultFetcher.php</error>
+    </parse_markers>
+  </file>
+  <file path="core/interfaces.php" hash="4f1910ee2941d1cbd7ea88a5ef9aaae8" package="Default">
+    <docblock line="3">
+      <description><![CDATA[The main interfaces]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="3" name="author" description="Benjamin Murauer"/>
+    </docblock>
+    <interface namespace="global" line="12" package="Default">
+      <name>iQueryConstructor</name>
+      <full_name>\iQueryConstructor</full_name>
+      <docblock line="8">
+        <description><![CDATA[The class constructing the query for the Solr server from the post
+information]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="23" package="Default">
+        <name>getRecommendQuery</name>
+        <full_name>getRecommendQuery</full_name>
+        <docblock line="14">
+          <description><![CDATA[this function builds the Solr query from the words inside the $post
+array.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="14" name="param" description="The words the user typed into the text area" type="string[]" variable="$post">
+            <type by_reference="false">string[]</type>
+          </tag>
+          <tag line="14" name="return" description="The complete Solr query" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="23">
+          <name>$post</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </interface>
+    <interface namespace="global" line="30" package="Default">
+      <name>iFetcher</name>
+      <full_name>\iFetcher</full_name>
+      <docblock line="26">
+        <description><![CDATA[This class is responsible for contacting Solr and retrieving the tweets.]]></description>
+        <long-description><![CDATA[<p>The
+exact form and supported features of the tweets depend on the implementation.</p>]]></long-description>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="41" package="Default">
+        <name>getTweets</name>
+        <full_name>getTweets</full_name>
+        <docblock line="32">
+          <description><![CDATA[sends a http request with a given query to solr and returs a set of
+tweets]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="32" name="param" description="the complete Solr query" type="string" variable="$query">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="32" name="return" description="a set of tweets" type="mixed[]">
+            <type by_reference="false">mixed[]</type>
+          </tag>
+        </docblock>
+        <argument line="41">
+          <name>$query</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </interface>
+    <interface namespace="global" line="51" package="Default">
+      <name>iExtractor</name>
+      <full_name>\iExtractor</full_name>
+      <docblock line="44">
+        <description><![CDATA[the exctractor class is responsible for extracting useful information out of
+the tweet.]]></description>
+        <long-description><![CDATA[<p>At least the text of the tweet and the hashtags should be
+extracted. Which other features can be extracted depends on the
+implementation of the queryConstructor and the fetcher classes. The resulting
+set can contain additional information that is used for sorting later on.</p>]]></long-description>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="62" package="Default">
+        <name>extractTags</name>
+        <full_name>extractTags</full_name>
+        <docblock line="53">
+          <description><![CDATA[extracts the hashtags of the given tweets.]]></description>
+          <long-description><![CDATA[<p>Might also add additional
+information for sorting.</p>]]></long-description>
+          <tag line="53" name="param" description="a set of tweets" type="mixed[]" variable="$tweets">
+            <type by_reference="false">mixed[]</type>
+          </tag>
+          <tag line="53" name="return" description="a set of tags" type="mixed[]">
+            <type by_reference="false">mixed[]</type>
+          </tag>
+        </docblock>
+        <argument line="62">
+          <name>$tweets</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </interface>
+    <interface namespace="global" line="70" package="Default">
+      <name>iSorter</name>
+      <full_name>\iSorter</full_name>
+      <docblock line="65">
+        <description><![CDATA[sorts an array of tags.]]></description>
+        <long-description><![CDATA[<p>The sorting depends on what information is stored in
+the tags array. The resulting array only contains the remaining necessary
+information for the user (no score etc.).</p>]]></long-description>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="79" package="Default">
+        <name>sortTags</name>
+        <full_name>sortTags</full_name>
+        <docblock line="72">
+          <description><![CDATA[]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="72" name="param" description="The hashtags" type="mixed[]" variable="$tags">
+            <type by_reference="false">mixed[]</type>
+          </tag>
+          <tag line="72" name="return" description="An array of tags that is sorted" type="mixed[]">
+            <type by_reference="false">mixed[]</type>
+          </tag>
+        </docblock>
+        <argument line="79">
+          <name>$tags</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </interface>
+    <interface namespace="global" line="85" package="Default">
+      <name>iFilter</name>
+      <full_name>\iFilter</full_name>
+      <docblock line="82">
+        <description><![CDATA[filters the tags by reducing the amount, adding content filters,.]]></description>
+        <long-description><![CDATA[<p>..</p>]]></long-description>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="95" package="Default">
+        <name>filterTags</name>
+        <full_name>filterTags</full_name>
+        <docblock line="87">
+          <description><![CDATA[this function filters the given hashtag array.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="87" name="param" description="The hashtags" type="mixed[]" variable="$tags">
+            <type by_reference="false">mixed[]</type>
+          </tag>
+          <tag line="87" name="return" description="the filtered hashtag array" type="mixed[]">
+            <type by_reference="false">mixed[]</type>
+          </tag>
+        </docblock>
+        <argument line="95">
+          <name>$tags</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </interface>
+    <parse_markers>
+      <error line="72" code="50012">No short description for method sortTags()</error>
+    </parse_markers>
+  </file>
+  <file path="core/defaultSorter.php" hash="ff6ed440dda47c16e070689dfcfd2933" package="Default">
+    <class final="false" abstract="false" namespace="global" line="8" package="Default">
+      <extends/>
+      <implements>\iSorter</implements>
+      <name>defaultSorter</name>
+      <full_name>\defaultSorter</full_name>
+      <docblock line="3">
+        <description><![CDATA[Description of defaultSorter]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="3" name="author" description="benjamin"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="21" package="Default">
+        <name>sortTags</name>
+        <full_name>sortTags</full_name>
+        <docblock line="10">
+          <description><![CDATA[This function sorts the tags.]]></description>
+          <long-description><![CDATA[<p>It gets a list of tags from extract_tags,
+which are sorted. In this default algorithm, the amount of occurrences
+and the score delivered by solr are used for the final score.</p>]]></long-description>
+          <tag line="10" name="param" description="the tags to be sorted" type="mixed[]" variable="$tags">
+            <type by_reference="false">mixed[]</type>
+          </tag>
+          <tag line="10" name="return" description="The strings in this array are later displayed unmodified to the user." type="string[]">
+            <type by_reference="false">string[]</type>
+          </tag>
+        </docblock>
+        <argument line="21">
+          <name>$tags</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file core/defaultSorter.php</error>
+    </parse_markers>
+  </file>
+  <file path="core/defaultExtractor.php" hash="f07a416b527bae07e169705be22805d7" package="Default">
+    <class final="false" abstract="false" namespace="global" line="13" package="Default">
+      <extends/>
+      <implements>\iExtractor</implements>
+      <name>defaultExtractor</name>
+      <full_name>\defaultExtractor</full_name>
+      <docblock line="8">
+        <description><![CDATA[Description of defaultExtractor]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="8" name="author" description="benjamin"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="27" package="Default">
+        <name>extractTags</name>
+        <full_name>extractTags</full_name>
+        <docblock line="15">
+          <description><![CDATA[This function extracts the hashtags from a set of tweets.]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="15" name="param" description="$tweets is an obect containing information about the tweet that might be helpful for the recommendation algorithm. In This example, the score of the tweets and their amount of occurrences, which is calculated separatly, are being used." type="\stdObj" variable="$tweets">
+            <type by_reference="false">\stdObj</type>
+          </tag>
+          <tag line="15" name="return" description="the return value of this function just needs to be compatible with the rank_tags function, as the result of this function is passed to rank_tags()." type="mixed[]">
+            <type by_reference="false">mixed[]</type>
+          </tag>
+        </docblock>
+        <argument line="27">
+          <name>$tweets</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file core/defaultExtractor.php</error>
+    </parse_markers>
+  </file>
+  <file path="core/defaultQueryConstructor.php" hash="b7648e9f57819719bb937080e42eb0b8" package="Default">
+    <include line="2" type="Include Once" package="Default">
+      <name>config.php</name>
+    </include>
+    <class final="false" abstract="false" namespace="global" line="8" package="Default">
+      <extends/>
+      <implements>\iQueryConstructor</implements>
+      <name>defaultQueryConstructor</name>
+      <full_name>\defaultQueryConstructor</full_name>
+      <docblock line="3">
+        <description><![CDATA[]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="3" name="author" description="benjamin"/>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="global" line="25" package="Default">
+        <name>getRecommendQuery</name>
+        <full_name>getRecommendQuery</full_name>
+        <docblock line="10">
+          <description><![CDATA[This function constructs the query for the Solr server.]]></description>
+          <long-description><![CDATA[<p>The result is a
+complete query that does not need to be modified.
+If hashtags are in the $post array, they will be considered as well (the
+hash symbol will be cut away for simplification though).
+The structure of the resulting query is:
+SOLR_URL?q=tweet:word1%20tweet:word2%20...tweet:wordn&amp;fl=score&amp;wt=json
+the query will produce json output.</p>]]></long-description>
+          <tag line="10" name="param" description="The array of words the user typed and are used by Solr for recommending. This can be the unaltered $_POST-array." type="string[]" variable="$post">
+            <type by_reference="false">string[]</type>
+          </tag>
+          <tag line="10" name="return" description="the complete Solr query" type="\strign">
+            <type by_reference="false">\strign</type>
+          </tag>
+        </docblock>
+        <argument line="25">
+          <name>$post</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="global" line="56" package="Default">
+        <name>escapeSolrValue</name>
+        <full_name>escapeSolrValue</full_name>
+        <argument line="56">
+          <name>$string</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file core/defaultQueryConstructor.php</error>
+      <critical line="3" code="50005">No short description for class \defaultQueryConstructor</critical>
+      <error line="56" code="50010">No DocBlock was found for method escapeSolrValue()</error>
+    </parse_markers>
+  </file>
+  <file path="update.php" hash="3f58d3a4df18c91d84eb34b53c007014" package="Default">
+    <include line="9" type="Require Once" package="Default">
+      <name>flatten.php</name>
+      <docblock line="3">
+        <description><![CDATA[this file can be used for automatic index updates.]]></description>
+        <long-description><![CDATA[<p>It gets the path to a json
+file as an argument, flattens it and then sends it to Solr for an index
+update.</p>]]></long-description>
+      </docblock>
+    </include>
+    <include line="10" type="Require Once" package="Default">
+      <name>config.php</name>
+    </include>
+    <function namespace="global" line="53" package="Default">
+      <name>log_error</name>
+      <full_name>\log_error</full_name>
+      <docblock line="49">
+        <description><![CDATA[writes an array to a file, separating the elements by a newline.]]></description>
+        <long-description><![CDATA[]]></long-description>
+        <tag line="49" name="param" description="" type="string[]" variable="$log">
+          <type by_reference="false">string[]</type>
+        </tag>
+      </docblock>
+      <argument line="53">
+        <name>$log</name>
+        <default><![CDATA[]]></default>
+        <type/>
+      </argument>
+    </function>
+    <parse_markers>
+      <error line="0" code="50007">No page-level DocBlock was found in file update.php</error>
+    </parse_markers>
+  </file>
+  <package name="Default" full_name="Default"/>
+  <namespace name="global" full_name="global"/>
+  <marker count="0">todo</marker>
+  <marker count="0">fixme</marker>
+  <deprecated count="0"/>
+</project>

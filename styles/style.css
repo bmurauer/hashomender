@@ -1,137 +1,137 @@
 body{
-	background: url("../images/bg.png");
+    background: url("../images/bg.png");
 }
 .content{
-	width: 470px;
-	float:left;
+    width: 470px;
+    float:left;
 }
 .caption{
-	font-family: "monospace";
-	font-size: 30px;
-	text-align: center;
-	color: #666;
+    font-family: "monospace";
+    font-size: 30px;
+    text-align: center;
+    color: #666;
 }
 #submit{
-	float:right;
-	margin-right: 20px;
-	margin-top: 4px;
+    float:right;
+    margin-right: 9px;
+    margin-top: 9px;
 }
 .button, .button:hover, .button:active {
-	background-color:#fff;
-	border: 2px solid #aaa;
-	padding: 5px;
-	box-shadow: #999 0 0 5px 0px;
-	display:inline-block;
-	color:#000;
-	font-family:arial;
-	font-size:15px;
-	font-weight:normal;
-	padding:2px 4px;
-	text-decoration:none;
+    margin: 4px;
+    background-color:#fff;
+    border: 2px solid #aaa;
+    padding: 5px;
+    box-shadow: #999 0 0 5px 0px;
+    display:inline-block;
+    color:#000;
+    font-family:arial;
+    font-size:15px;
+    font-weight:normal;
+    padding:2px 4px;
+    text-decoration:none;
 }
 .button:hover {
-	background: #fdb;
+    background: #fdb;
 }
 .button:active {
-	position:relative;
-	top:1px;
+    position:relative;
+    top:1px;
 }
 .wrapper, .wrapper-start{
-	padding: 10px;
-	margin-left:auto;
-	margin-right: auto;
-	color: #000;
-	width: 700px;
-	overflow:hidden;
-	background: #eee;
-	font-family: "helvetica";
-/*	
-	border-radius: 15px; 
-	-moz-border-radius: 15px;
-	-webkit-border-radius: 15px;
-*/
-	border: 1px solid #aaa;
+    padding: 10px;
+    margin-left:250px;
+    color: #000;
+    width: 700px;
+    overflow:hidden;
+    background: #eee;
+    font-family: "helvetica";
+    /*	
+        border-radius: 15px; 
+        -moz-border-radius: 15px;
+        -webkit-border-radius: 15px;
+    */
+    border: 1px solid #aaa;
 
-	box-shadow: #999 0 0 5px 0px;
+    box-shadow: #999 0 0 5px 0px;
 }
 .wrapper {
-	min-height: 400px;
+    min-height: 400px;
 }
 .wrapper-start{
-	width: 500px;
+    width: 500px;
 }
 
 h2{
-	font-size: 20px;
+    font-size: 20px;
 }
 textarea, textarea:focus{
-	background: #fff;
-	font-family:"Helvetica";
-	padding: 5px;
-	font-size: 20pt;
-	width: 450px;
-  height: 300px;
-	resize: none;
-	border: 1px solid #aaa;
-	box-shadow: inset #999 0 0 3px 0px;
+    background: #fff;
+    font-family:"Helvetica";
+    padding: 5px;
+    font-size: 20pt;
+    width: 450px;
+    height: 285px;
+    resize: none;
+    border: 1px solid #aaa;
+    box-shadow: inset #999 0 0 3px 0px;
 }
-#list, #dic-list{
-  padding-left: 5px;
-  height: 296px;
-	border: 1px solid #aaa;
+#list{
+    padding-left: 5px;
+    height: 296px;
+    border: 1px solid #aaa;
 
-	box-shadow: inset #999 0 0 3px 0px;
-	background: #fff;
+    box-shadow: inset #999 0 0 3px 0px;
+    background: #fff;
 }
 textarea:focus, #submit:focus, #list:focus{
-	box-shadow: inset #f80 0 0 8px 1px;
+    box-shadow: inset #f80 0 0 8px 1px;
 }
 
 
 hr{
-	border: solid 1px #f80;
+    border: solid 1px #f80;
 }
 
 .counter{
-	float: left;
-	margin-top: 4px;
+    float: left;
+    margin-top: 4px;
 }
 .taglist{
-	overflow: hidden;
+    overflow: hidden;
 }
 
 .username{
-	font-family: "monospace";
-	font-size: 12pt;
-	margin-bottom: 10px;
-	margin-top: -30px;
+    font-family: "monospace";
+    font-size: 12pt;
+    margin-bottom: 10px;
+    margin-top: -30px;
 }
 a{
-	color: #f80;
-	text-decoration: none;
+    color: #f80;
+    text-decoration: none;
 }
 .username a:hover{
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .error{
-	color: red;
+    color: red;
 }
 
 .disabled{
-	color: #999;
-	border-color: #ccc;
+    color: #999;
+    border-color: #ccc;
 }
 
 .selected, .unselected:hover{
-	color: #f80;
-	cursor: pointer;
+    color: #f80;
+    cursor: pointer;
 }
 
 #timeline{
-	position: absolute;
-	left: 10px;
-	top: 140px;
+    position: absolute;
+    left: 10px;
+    top: 140px;
 }
 .timeline-user{
     font-style: italic;
@@ -140,43 +140,43 @@ a{
     padding-bottom: 5px;
 }
 .past-tweet {
-	width: 230px;
-	background: #eee;
-	border: 1px solid #aaa;
+    width: 230px;
+    background: #eee;
+    border: 1px solid #aaa;
 
-	box-shadow: #999 0 0 3px 0px;
-	margin: 3px;
-	padding: 4px;
-	color: #000;
-	font-family: helvetica;
-	float: left;
-	clear: left;
+    box-shadow: #999 0 0 3px 0px;
+    margin: 3px;
+    padding: 4px;
+    color: #000;
+    font-family: helvetica;
+    float: left;
+    clear: left;
 }
 .date{
-	color: #777;
-	font-size: 8pt;
-	margin-bottom: 5px;
+    color: #777;
+    font-size: 8pt;
+    margin-bottom: 5px;
 }
 #tooltip-wrapper{
-	position: absolute;
-	z-index: 4;
+    position: absolute;
+    z-index: 4;
 }
 
 #tooltip-wrapper img{
-	float:left;
+    float:left;
 }
 #tooltip {
-	z-index: 2;
-	background: #fdb;
-	margin-left: 24px;
-	font-family:"Helvetica";
+    z-index: 2;
+    background: #fdb;
+    margin-left: 24px;
+    font-family:"Helvetica";
     font-size: 16pt;
-	padding: 10px;
-	border: 1px solid #aaa;
-	min-height: 24px;
-	box-shadow: #999 0 0 3px 0px;
-	left: 300px;
-	top: 400px;
+    padding: 10px;
+    border: 1px solid #aaa;
+    min-height: 24px;
+    box-shadow: #999 0 0 3px 0px;
+    left: 300px;
+    top: 400px;
 }
 .tip{
     padding: 2px;
@@ -184,4 +184,21 @@ a{
 #tooltip .selected{
     box-shadow: inset #fdb 0 0 3px 0;
     background: white;
+}
+
+#error{
+    display:none;
+    font-family: "Helvetica";
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 10px;
+    width: 400px;
+    font-size: 12pt;
+    color: #800;
+    background: #fdd;
+    border: 1px solid #faa;
+    box-shadow: #fdd 0 0 3px 0;
+    
 }

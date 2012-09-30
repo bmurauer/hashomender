@@ -17,7 +17,7 @@
                 logged in as: <?php echo $user->screen_name; ?>|
                 <a href="logout.php" tabindex="-2">logout</a>
             </div>
-			<div id="char"></div>
+			<div id="error"></div>
 		</div>
 
 		<div class="wrapper">

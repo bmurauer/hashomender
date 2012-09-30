@@ -224,7 +224,10 @@ function findRecommendedHashtags(e) {
         });
 
         httpReq.done(function(msg){
-            console.log(msg);
+            if(msg.length == 2 && msg[0] == "Error"){
+                set_error(msg[1]);
+                return;
+            }
             // clear old entries
             tagList = [];
 		
@@ -331,7 +334,6 @@ function getTimeline(){
             timeline = response;
             $('#timeline').html('<input type="submit" class="button" value="refresh" onclick="getTimeline()" tabindex="-1"/><br>');
             for(var i=0;i<response.length;i++){
-                console.log(response);
                 var reg_exUrl = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/;
                 var linked = response[i].text.replace(reg_exUrl, function(url){
                     return '<a href="'+url+'">'+url+'</a>';
@@ -373,3 +375,8 @@ $(document).ready(function(){
     });
     $(window).resize();
 });
+
+function set_error(msg){
+    $('#error').html(msg);
+    $('#error').show();
+}

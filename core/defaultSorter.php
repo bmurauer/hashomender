@@ -23,7 +23,7 @@ class defaultSorter implements iSorter {
         foreach ($tags as $tag => $values) {
             $total_score = FACTOR_COUNT * $values['count'] +
                     FACTOR_SCORE * $values['maxScore'];
-            $sorted[$tag] = $total_score;
+            $sorted[$values['original']] = $total_score;
         }
         // asort sorts an array descending by its value
         arsort($sorted);

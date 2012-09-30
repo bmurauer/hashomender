@@ -15,9 +15,14 @@ class defaultFetcher implements iFetcher {
      *      a parsed json object of the result
      */
     public function getTweets($query) {
-        $req = new HttpRequest($query, HTTP_METH_POST);
-        $result = json_decode($req->send()->getBody());
-        return $result;
+        try {
+            $req = new HttpRequest($query, HTTP_METH_POST);
+            $result = json_decode($req->send()->getBody());
+            return $result;
+        } catch (Exception $e) {
+            print(json_encode(array("Error", "Solr server not found, is it running?")));
+            exit();
+        }
     }
 
 }
