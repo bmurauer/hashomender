@@ -33,8 +33,8 @@
 				</div>
 			</div>
 		</div>
-		<div id="timeline">
-		</div>
+		<div id="timeline-refresh"><img src="images/refresh.png" onClick="getTimeline();"/></div>
+		<div id="timeline"></div>
 		<div id="tooltip-wrapper">
 			<img src="images/arrow.png"/>
 			<div id="tooltip">

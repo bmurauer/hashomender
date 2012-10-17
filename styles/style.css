@@ -1,5 +1,6 @@
 body{
     background: url("../images/bg.png");
+    min-width:1220px;
 }
 .content{
     width: 470px;
@@ -7,7 +8,7 @@ body{
 }
 .caption{
     font-family: "monospace";
-    font-size: 30px;
+    font-size: 20px;
     text-align: center;
     color: #666;
 }
@@ -39,23 +40,18 @@ body{
 }
 .wrapper, .wrapper-start{
     padding: 10px;
-    margin-left:250px;
+    margin-left:auto;
+    margin-right:auto;
     color: #000;
     width: 700px;
     overflow:hidden;
     background: #eee;
     font-family: "helvetica";
-    /*	
-        border-radius: 15px; 
-        -moz-border-radius: 15px;
-        -webkit-border-radius: 15px;
-    */
     border: 1px solid #aaa;
-
     box-shadow: #999 0 0 5px 0px;
 }
 .wrapper {
-    min-height: 400px;
+    height: 450px;
 }
 .wrapper-start{
     width: 500px;
@@ -127,11 +123,25 @@ a{
     color: #f80;
     cursor: pointer;
 }
+#timeline-refresh img{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    left: 10px;
+    top:60px;
+}
 
 #timeline{
     position: absolute;
     left: 10px;
-    top: 140px;
+    top: 100px;
+    overflow:auto;
+    height:450px;
+    width:240px;
+    background: #eee;
+    border: 1px solid #aaa;
+    box-shadow: #999 0 0 3px 0px;
+
 }
 .timeline-user{
     font-style: italic;
@@ -140,17 +150,14 @@ a{
     padding-bottom: 5px;
 }
 .past-tweet {
-    width: 230px;
-    background: #eee;
-    border: 1px solid #aaa;
-
-    box-shadow: #999 0 0 3px 0px;
+    width: 200px;
     margin: 3px;
     padding: 4px;
     color: #000;
     font-family: helvetica;
     float: left;
     clear: left;
+    border-bottom: 1px solid gray;
 }
 .date{
     color: #777;

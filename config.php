@@ -36,7 +36,7 @@ define("SOLR_URL", "http://localhost:8983/solr/select/");
 /**
  * The max amount of tweets appearing in the timeline on the left
  */
-define("TIMELINE_LIMIT", 5);
+define("TIMELINE_LIMIT", 50);
 
 /**
  * The factor the SOLR score will be multiplied with in the default

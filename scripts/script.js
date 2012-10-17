@@ -37,12 +37,6 @@ new function($) {
 }(jQuery);
 
 function setEventHandlers(){
-    /*$('#text').focus(function(){
-		// set caret to the end of the tweet
-		var pos = $('#text').val().length;
-		$('#text').setCursorPosition(pos);
-	});
-	*/
     $('#list').focus(function(){
         if(!tagList || tagList.length < 1){
             $('#submit').focus();
@@ -93,7 +87,7 @@ function keyHandler(e){
         } else if (e.which == 27){ // ecsape closes tooltip
             hideTooltip();
         }
-    } else if($('*:focus').attr('id') == 'list'){
+    } else if($('*:focus').attr('id') == 'list'){ // Recommendation
         preventDefaults(e);
         if (e.which == 40){ // DOWN, move in tag list
             selection ++;
@@ -328,11 +322,13 @@ function checkAndSend(){
 }
 
 function getTimeline(){
-    $('#timeline').html('<img src="images/loading.gif"/>');
+    $('#timeline').html("");
+    $('#timeline').css('background', '#eee url(images/loading.gif) no-repeat center center');
     $.post("timeline.php",
         function(response){
             timeline = response;
-            $('#timeline').html('<input type="submit" class="button" value="refresh" onclick="getTimeline()" tabindex="-1"/><br>');
+            $('#timeline').css('background', '#eee');
+            $('#timeline').html("");
             for(var i=0;i<response.length;i++){
                 var reg_exUrl = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/;
                 var linked = response[i].text.replace(reg_exUrl, function(url){
