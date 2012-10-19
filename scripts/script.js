@@ -180,15 +180,14 @@ function findRecommendedHashtags(e) {
     }
     var val = $("#text").val();
     calcLength();
-    var lastw = lastWord(val);
+    var lastw = selectedWord();
 
     // following lines check if the user is currently typing a 
     // hashtag. after 3 symbols, the system collects all hashtags with the same
     // letters already typed and displays them to the user. Here, no
     // recommendation is being used, just a plain dictionary-style
     // autocompletion.
-    if(lastw.charAt(0) == '#' &&
-        lastw.length > 3 && val.charAt(val.length-1) != ' '){
+    if(lastw.charAt(0) == '#' && lastw.length > 3){
         mode=AUTOCOMPLETE;
         var hashReq = $.ajax({
             url: "tags.php",
@@ -298,6 +297,24 @@ function lastWord(text){
     return text.substring(last).trim();
 }
 
+function selectedWord(){
+    var text = $('#text').val();
+    var caret = $('#text').caret().start;
+    console.log(caret + " - char: '"+text.charAt(caret)+"'");
+    
+    if(caret == 0){
+        return "";
+    }
+    
+    for(var i=caret-1; i>=0; i--){
+        if(i == 0)
+            return text.substring(i, caret)
+        else if (text.charAt(i) == ' ')
+            return text.substring(i, caret);
+    }    
+    return "";
+}
+
 function split( val ) {
     return val.split( / \s*/ );
 }
@@ -334,7 +351,10 @@ function getTimeline(){
                 var linked = response[i].text.replace(reg_exUrl, function(url){
                     return '<a href="'+url+'">'+url+'</a>';
                 });
-                $('#timeline').append('<div class="past-tweet"><div class="date">'+response[i].date+'</div>'
+                $('#timeline').append(
+                    '<div class="past-tweet">'
+                    + '<img src="'+response[i].image+'"/>'
+                    + '<div class="date">'+response[i].date+'</div>'
                     +'<div class="timeline-user">'+response[i].name+'</div>'
                     +linked+'<br>'
                     +'<input type="submit" class="button" value="Retweet" onClick="retweet('+i+');"/>'

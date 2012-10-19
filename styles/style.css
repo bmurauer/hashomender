@@ -149,6 +149,11 @@ a{
     padding-left: 5px;
     padding-bottom: 5px;
 }
+.past-tweet img{
+    float:left;
+    margin-right: 5px;
+    margin-top:-3px;
+}
 .past-tweet {
     width: 200px;
     margin: 3px;

@@ -37,6 +37,7 @@
             "screen_name" => $tweet['user']['screen_name'],
 			"text" => $tweet['text'],
 			"date" => $day.'. '.$month.' '.$year.' '.$time,
+                        "image" => $tweet['user']['profile_image_url']
 		);
 	}
 	print(json_encode($response));
