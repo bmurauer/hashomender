@@ -43,16 +43,14 @@ body{
     margin-left:auto;
     margin-right:auto;
     color: #000;
-    width: 700px;
+    width: 915px;
     overflow:hidden;
     background: #eee;
     font-family: "helvetica";
     border: 1px solid #aaa;
     box-shadow: #999 0 0 5px 0px;
 }
-.wrapper {
-    height: 450px;
-}
+
 .wrapper-start{
     width: 500px;
 }
@@ -94,6 +92,8 @@ hr{
 }
 .taglist{
     overflow: hidden;
+    width:200px;
+    float:left;
 }
 
 .username{
@@ -123,25 +123,27 @@ a{
     color: #f80;
     cursor: pointer;
 }
+
+#timeline-refresh{
+    float:right;
+    margin-right: -210px;
+}
+
 #timeline-refresh img{
     width: 24px;
+    
     height: 24px;
-    position: absolute;
-    left: 10px;
-    top:60px;
 }
 
 #timeline{
-    position: absolute;
-    left: 10px;
-    top: 100px;
+    float:right;
     overflow:auto;
-    height:450px;
     width:240px;
     background: #eee;
     border: 1px solid #aaa;
     box-shadow: #999 0 0 3px 0px;
-
+    height: 420px;
+    margin: -11px;
 }
 .timeline-user{
     font-style: italic;
