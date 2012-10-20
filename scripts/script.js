@@ -124,7 +124,7 @@ function autocompleteTag(tag){
     console.log("start: "+start+" - end: "+end+" - word: "+text.substring(start, end));
     var part1 = text.substring(0,start);
     var part2 = text.substring(end);
-    $('#text').val($.trim(part1) + " " + tag + " " + $.trim(part2));
+    return $.trim(part1) + " " + tag + " " + $.trim(part2);
 }
 
 function insertTagIntoText(tag){
@@ -135,7 +135,7 @@ function insertTagIntoText(tag){
     var lastw = selectedWord(old_tweet);
     var new_tweet = '';
     if(lastw.charAt(0) == '#'){
-        new_tweet = removeSelectedWord(old_tweet) + tag + ' ';
+        new_tweet = autocompleteTag(old_tweet) + tag + ' ';
     } else {
         // this value will be -1 if the tag is not contained in the text.
         // search here is case insensitive and ignores the hash symbol
