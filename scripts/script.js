@@ -62,7 +62,7 @@ function preventDefaults(e){
 
 function keyHandler(e){
     if(mode == AUTOCOMPLETE){
-        var lastw = lastWord($('#text').val());
+        var lastw = selectedWord($('#text').val());
         preventDefaults(e);
         if(e.which == 40){
             autocompleteSelection++;
@@ -112,19 +112,20 @@ function autocompleteTag(tag){
     var text = $('#text').val();
  //   var tag = autocompleteList[autocompleteSelection];
     var caret = $('#text').caret().start;
-    console.log("caret start: "+caret);
+    
     var start = caret-1;
     var end = caret;
-    while(text.charAt(start) != ' ' && start >= 0){
+    while(text.charAt(start) != ' ' && start > 0){
         start--;
     }
     while(text.charAt(end) != ' ' && end < text.length){
         end++;
     }
-    console.log("start: "+start+" - end: "+end+" - word: "+text.substring(start, end));
-    var part1 = text.substring(0,start);
-    var part2 = text.substring(end);
-    return $.trim(part1) + " " + tag + " " + $.trim(part2);
+    var part1 = $.trim(text.substring(0,start));
+    var part2 = $.trim(text.substring(end));
+    if(part1.length >= 1)
+        part1 += " ";
+    return part1 + tag + " " + part2;
 }
 
 function insertTagIntoText(tag){
@@ -135,7 +136,7 @@ function insertTagIntoText(tag){
     var lastw = selectedWord(old_tweet);
     var new_tweet = '';
     if(lastw.charAt(0) == '#'){
-        new_tweet = autocompleteTag(old_tweet) + tag + ' ';
+        new_tweet = autocompleteTag(tag);
     } else {
         // this value will be -1 if the tag is not contained in the text.
         // search here is case insensitive and ignores the hash symbol
@@ -161,10 +162,10 @@ function insertTagIntoText(tag){
                 new_tweet += ' ';
             } 
             new_tweet += tag + " ";
-        }
-        var pos = $('#text').val().length;
-        $('#text').setCursorPosition(pos);
     }	
+    }
+    var pos = $('#text').val().length;
+    $('#text').setCursorPosition(pos);
     $('#text').val(new_tweet);
     calcLength();
     findRecommendedHashtags();
@@ -317,7 +318,6 @@ function lastWord(text){
 function selectedWord(){
     var text = $('#text').val();
     var caret = $('#text').caret().start;
-    console.log(caret + " - char: '"+text.charAt(caret)+"'");
     
     if(caret == 0){
         return "";
@@ -325,9 +325,9 @@ function selectedWord(){
     
     for(var i=caret-1; i>=0; i--){
         if(i == 0)
-            return text.substring(i, caret)
+            return $.trim(text.substring(i, caret));
         else if (text.charAt(i) == ' ')
-            return text.substring(i, caret);
+            return $.trim(text.substring(i, caret));
     }    
     return "";
 }
