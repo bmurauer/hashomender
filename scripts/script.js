@@ -108,9 +108,23 @@ function keyHandler(e){
 		
 }
 
-function removeLastWord(text){
-    var index = text.lastIndexOf("#");
-    return text.substring(0, index);
+function autocompleteTag(tag){
+    var text = $('#text').val();
+ //   var tag = autocompleteList[autocompleteSelection];
+    var caret = $('#text').caret().start;
+    console.log("caret start: "+caret);
+    var start = caret-1;
+    var end = caret;
+    while(text.charAt(start) != ' ' && start >= 0){
+        start--;
+    }
+    while(text.charAt(end) != ' ' && end < text.length){
+        end++;
+    }
+    console.log("start: "+start+" - end: "+end+" - word: "+text.substring(start, end));
+    var part1 = text.substring(0,start);
+    var part2 = text.substring(end);
+    $('#text').val($.trim(part1) + " " + tag + " " + $.trim(part2));
 }
 
 function insertTagIntoText(tag){
@@ -118,10 +132,10 @@ function insertTagIntoText(tag){
 
     // check if we are inserting a recommendation or an autocompletion. in the
     // latter case, we should complete the word rather than replace it
-    var lastw = selectWord(old_tweet);
+    var lastw = selectedWord(old_tweet);
     var new_tweet = '';
     if(lastw.charAt(0) == '#'){
-        new_tweet = removeLastWord(old_tweet) + tag + ' ';
+        new_tweet = removeSelectedWord(old_tweet) + tag + ' ';
     } else {
         // this value will be -1 if the tag is not contained in the text.
         // search here is case insensitive and ignores the hash symbol
@@ -217,7 +231,10 @@ function findRecommendedHashtags(e) {
         });
 
         httpReq.done(function(msg){
-            if(msg.length == 2 && msg[0] == "Error"){
+            if(!msg){
+                set_error("No response from Solr");
+                return;
+            } else if(msg.length == 2 && msg[0] == "Error"){
                 set_error(msg[1]);
                 return;
             }
