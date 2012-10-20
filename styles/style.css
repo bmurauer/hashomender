@@ -156,7 +156,7 @@ a{
 }
 .past-tweet {
     width: 200px;
-    margin: 3px;
+    margin: 8px 3px 3px 3px;
     padding: 4px;
     color: #000;
     font-family: helvetica;

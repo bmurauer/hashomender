@@ -118,7 +118,7 @@ function insertTagIntoText(tag){
 
     // check if we are inserting a recommendation or an autocompletion. in the
     // latter case, we should complete the word rather than replace it
-    var lastw = lastWord(old_tweet);
+    var lastw = selectWord(old_tweet);
     var new_tweet = '';
     if(lastw.charAt(0) == '#'){
         new_tweet = removeLastWord(old_tweet) + tag + ' ';
