@@ -278,7 +278,7 @@ function findRecommendedHashtags(e) {
             $('#text').focus();
             drawList();
             recommendation_time_counter++;
-            recommendation_time_value += (start_autocomplete - (new Date().getTime()));
+            recommendation_time_value += (start_recommendation - (new Date().getTime()));
         });
     }
 
