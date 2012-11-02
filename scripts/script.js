@@ -45,12 +45,6 @@ new function($) {
 }(jQuery);
 
 function setEventHandlers(){
-    /*$('#text').focus(function(){
-		// set caret to the end of the tweet
-		var pos = $('#text').val().length;
-		$('#text').setCursorPosition(pos);
-	});
-	*/
     $('#list').focus(function(){
         if(!tagList || tagList.length < 1){
             $('#submit').focus();
@@ -76,7 +70,7 @@ function preventDefaults(e){
 
 function keyHandler(e){
     if(mode == AUTOCOMPLETE){
-        var lastw = lastWord($('#text').val());
+        var lastw = selectedWord($('#text').val());
         preventDefaults(e);
         if(e.which == 40){
             autocompleteSelection++;
@@ -101,7 +95,7 @@ function keyHandler(e){
         } else if (e.which == 27){ // ecsape closes tooltip
             hideTooltip();
         }
-    } else if($('*:focus').attr('id') == 'list'){
+    } else if($('*:focus').attr('id') == 'list'){ // Recommendation
         preventDefaults(e);
         if (e.which == 40){ // DOWN, move in tag list
             selection ++;
@@ -122,9 +116,24 @@ function keyHandler(e){
 		
 }
 
-function removeLastWord(text){
-    var index = text.lastIndexOf("#");
-    return text.substring(0, index);
+function autocompleteTag(tag){
+    var text = $('#text').val();
+ //   var tag = autocompleteList[autocompleteSelection];
+    var caret = $('#text').caret().start;
+    
+    var start = caret-1;
+    var end = caret;
+    while(text.charAt(start) != ' ' && start > 0){
+        start--;
+    }
+    while(text.charAt(end) != ' ' && end < text.length){
+        end++;
+    }
+    var part1 = $.trim(text.substring(0,start));
+    var part2 = $.trim(text.substring(end));
+    if(part1.length >= 1)
+        part1 += " ";
+    return part1 + tag + " " + part2;
 }
 
 function insertTagIntoText(tag){
@@ -132,10 +141,10 @@ function insertTagIntoText(tag){
 
     // check if we are inserting a recommendation or an autocompletion. in the
     // latter case, we should complete the word rather than replace it
-    var lastw = lastWord(old_tweet);
+    var lastw = selectedWord(old_tweet);
     var new_tweet = '';
     if(lastw.charAt(0) == '#'){
-        new_tweet = removeLastWord(old_tweet) + tag + ' ';
+        new_tweet = autocompleteTag(tag);
     } else {
         // this value will be -1 if the tag is not contained in the text.
         // search here is case insensitive and ignores the hash symbol
@@ -161,10 +170,10 @@ function insertTagIntoText(tag){
                 new_tweet += ' ';
             } 
             new_tweet += tag + " ";
-        }
-        var pos = $('#text').val().length;
-        $('#text').setCursorPosition(pos);
     }	
+    }
+    var pos = $('#text').val().length;
+    $('#text').setCursorPosition(pos);
     $('#text').val(new_tweet);
     calcLength();
     findRecommendedHashtags();
@@ -194,15 +203,14 @@ function findRecommendedHashtags(e) {
     }
     var val = $("#text").val();
     calcLength();
-    var lastw = lastWord(val);
+    var lastw = selectedWord();
 
     // following lines check if the user is currently typing a 
     // hashtag. after 3 symbols, the system collects all hashtags with the same
     // letters already typed and displays them to the user. Here, no
     // recommendation is being used, just a plain dictionary-style
     // autocompletion.
-    if(lastw.charAt(0) == '#' &&
-        lastw.length > 3 && val.charAt(val.length-1) != ' '){
+    if(lastw.charAt(0) == '#' && lastw.length > 3){
         mode=AUTOCOMPLETE;
         var start_autocomplete = new Date().getTime();
         var hashReq = $.ajax({
@@ -236,7 +244,10 @@ function findRecommendedHashtags(e) {
         });
 
         httpReq.done(function(msg){
-            if(msg.length == 2 && msg[0] == "Error"){
+            if(!msg){
+                set_error("No response from Solr");
+                return;
+            } else if(msg.length == 2 && msg[0] == "Error"){
                 set_error(msg[1]);
                 return;
             }
@@ -318,6 +329,23 @@ function lastWord(text){
     return text.substring(last).trim();
 }
 
+function selectedWord(){
+    var text = $('#text').val();
+    var caret = $('#text').caret().start;
+    
+    if(caret == 0){
+        return "";
+    }
+    
+    for(var i=caret-1; i>=0; i--){
+        if(i == 0)
+            return $.trim(text.substring(i, caret));
+        else if (text.charAt(i) == ' ')
+            return $.trim(text.substring(i, caret));
+    }    
+    return "";
+}
+
 function split( val ) {
     return val.split( / \s*/ );
 }
@@ -342,17 +370,22 @@ function checkAndSend(){
 }
 
 function getTimeline(){
-    $('#timeline').html('<img src="images/loading.gif"/>');
+    $('#timeline').html("");
+    $('#timeline').css('background', '#eee url(images/loading.gif) no-repeat center center');
     $.post("timeline.php",
         function(response){
             timeline = response;
-            $('#timeline').html('<input type="submit" class="button" value="refresh" onclick="getTimeline()" tabindex="-1"/><br>');
+            $('#timeline').css('background', '#eee');
+            $('#timeline').html("");
             for(var i=0;i<response.length;i++){
                 var reg_exUrl = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/;
                 var linked = response[i].text.replace(reg_exUrl, function(url){
                     return '<a href="'+url+'">'+url+'</a>';
                 });
-                $('#timeline').append('<div class="past-tweet"><div class="date">'+response[i].date+'</div>'
+                $('#timeline').append(
+                    '<div class="past-tweet">'
+                    + '<img src="'+response[i].image+'"/>'
+                    + '<div class="date">'+response[i].date+'</div>'
                     +'<div class="timeline-user">'+response[i].name+'</div>'
                     +linked+'<br>'
                     +'<input type="submit" class="button" value="Retweet" onClick="retweet('+i+');"/>'
