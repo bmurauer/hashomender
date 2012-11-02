@@ -4,8 +4,16 @@ var selection = 0;
 // list of currently recommended tags
 var tagList;
 
+
+var recommendation_time_counter = 0;
+var recommendation_time_value = 0;
+
 var autocompleteList;
 var autocompleteSelection = 0;
+
+var autocomplete_time_counter = 0;
+var autocomplete_time_value = 0;
+
 
 var mode;
 
@@ -220,6 +228,7 @@ function findRecommendedHashtags(e) {
     // autocompletion.
     if(lastw.charAt(0) == '#' && lastw.length > 3){
         mode=AUTOCOMPLETE;
+        var start_autocomplete = new Date().getTime();
         var hashReq = $.ajax({
             url: "tags.php",
             type: "POST",
@@ -234,11 +243,14 @@ function findRecommendedHashtags(e) {
             if(!tooltip)
                 autocompleteSelection = 0;
             drawTooltip(lastw.length);
+            autocomplete_time_counter++;
+            autocomplete_time_value += (start_autocomplete - (new Date().getTime()));
         });
     } else {
         hideTooltip();
         mode=RECOMMEND;
         // Following lines are for the actual recommendation.
+        start_recommendation = new Date().getTime();
         var httpReq = $.ajax({
             url: "recommend.php",
             type: "POST",
@@ -265,6 +277,8 @@ function findRecommendedHashtags(e) {
             selection = 0;
             $('#text').focus();
             drawList();
+            recommendation_time_counter++;
+            recommendation_time_value += (start_autocomplete - (new Date().getTime()));
         });
     }
 
@@ -396,6 +410,8 @@ function getTimeline(){
             }
 			
         });
+    console.log("AUTOCOMPLETION: "+ (autocomplete_time_value/autocomplete_time_counter));
+    console.log("RECOMMENDATION: "+ (recommendation_time_value/recommendation_time_counter));
 }
 function reply(i){
     var text = '@'+timeline[i].screen_name + ': ';
