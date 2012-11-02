@@ -244,7 +244,7 @@ function findRecommendedHashtags(e) {
                 autocompleteSelection = 0;
             drawTooltip(lastw.length);
             autocomplete_time_counter++;
-            autocomplete_time_value += (start_autocomplete - (new Date().getTime()));
+            autocomplete_time_value += ((new Date().getTime()) - start_autocomplete );
         });
     } else {
         hideTooltip();
@@ -278,7 +278,7 @@ function findRecommendedHashtags(e) {
             $('#text').focus();
             drawList();
             recommendation_time_counter++;
-            recommendation_time_value += (start_recommendation - (new Date().getTime()));
+            recommendation_time_value += ((new Date().getTime())-start_recommendation);
         });
     }
 
