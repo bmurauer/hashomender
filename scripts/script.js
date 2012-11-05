@@ -4,6 +4,7 @@ var selection = 0;
 // list of currently recommended tags
 var tagList;
 
+var returnedRequests = 0;
 
 var recommendation_counter = 0;
 var recommendation_sum = 0;
