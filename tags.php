@@ -7,8 +7,8 @@
  * the list has not the final size, more results are fetched. 
  */
 include_once 'config.php';
-
-
+include_once 'time.php';
+$start = microtime(true);
 $tag_pool = array();
 
 $word = escapeSolrValue(strtolower($_POST['lastWord']));
@@ -48,7 +48,8 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 header('Content-type: application/json');
 /**/
 print(json_encode($tag_pool_reduced));
-
+$end = microtime(true);
+logTime(1000*($end-$start), "autocomplete");
 /**
  * this function escapes symbols that are special characters for the Solr query.
  * @author <a href="http://e-mats.org/2010/01/escaping-characters-in-a-solr-query-solr-url/">e-mats.org</a>

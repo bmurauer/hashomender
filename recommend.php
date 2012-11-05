@@ -1,4 +1,5 @@
 <?php
+include_once('time.php');
 $start = microtime(true);
 // sending back json, so we have to modify the headers.
 header('Cache-Control: no-cache, must-revalidate');
@@ -41,7 +42,7 @@ $filtered_tags = $filter->filterTags($sorted_tags);
 // print back result
 $end = microtime(true);
 $time = $end - $start;
-logTime($time*1000);
+logTime($time*1000, "recommend");
 print(json_encode($filtered_tags));
 
 
@@ -54,14 +55,6 @@ function checkInterfaces($elements, $interfaces){
     }
 }
 
-function logTime($time){
-    $file = fopen(TIME_LOG_PATH, "a");
-    if(!$file){
-        exit();
-    }
-    fputs($file, $time);
-    fputs($file, "\n");
-    fclose($file);
-}
+
 ?>
 
