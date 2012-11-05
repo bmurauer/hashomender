@@ -59,7 +59,8 @@ function logTime($time){
     if(!$file){
         exit();
     }
-    fputs($file, $time+"\n");
+    fputs($file, $time);
+    fputs($file, ';');
     fclose($file);
 }
 ?>
