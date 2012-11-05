@@ -40,6 +40,6 @@
             <div id="tooltip">
             </div>
         </div>
-        <input type="button" value="benchmark" onClick="benchmark()"/>
+        <input type="button" value="benchmark" onClick="benchmarkRuns=0; benchmark()"/>
     </body>
 </html>

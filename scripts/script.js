@@ -4,16 +4,9 @@ var selection = 0;
 // list of currently recommended tags
 var tagList;
 
-var returnedRequests = 0;
-
-var recommendation_counter = 0;
-var recommendation_sum = 0;
 
 var autocompleteList;
 var autocompleteSelection = 0;
-
-var autocompletion_counter = 0;
-var autocompletion_sum = 0;
 
 
 var mode;
@@ -47,7 +40,7 @@ new function($) {
 
 function setEventHandlers(){
     $('#list').focus(function(){
-        if(!tagList || tagList.length < 1){
+       if(!tagList || atagList.length < 1){
             $('#submit').focus();
             return;
         }
@@ -229,7 +222,7 @@ function findRecommendedHashtags(e) {
     // autocompletion.
     if(lastw.charAt(0) == '#' && lastw.length > 3){
         mode=AUTOCOMPLETE;
-        var start_autocomplete = new Date().getTime();
+	start_a = new Date().getTime();
         var hashReq = $.ajax({
             url: "tags.php",
             type: "POST",
@@ -244,17 +237,13 @@ function findRecommendedHashtags(e) {
             if(!tooltip)
                 autocompleteSelection = 0;
             drawTooltip(lastw.length);
-            autocompletion_counter++;
-            autocompletion_sum += ((new Date().getTime()) - start_autocomplete );
-            if(autocompletion_counter == 100){
-                console.log("autocompletion - counter: "+autocompletion_counter+" - sum: "+autocompletion_sum+" - avg: "+autocompletion_sum/autocompletion_counter);
-            }
+            bench_callback_a();
         });
     } else {
         hideTooltip();
         mode=RECOMMEND;
         // Following lines are for the actual recommendation.
-        start_recommendation = new Date().getTime();
+	start_r = new Date().getTime();
         var httpReq = $.ajax({
             url: "recommend.php",
             type: "POST",
@@ -282,11 +271,7 @@ function findRecommendedHashtags(e) {
             selection = 0;
             $('#text').focus();
             drawList();
-            recommendation_counter++;
-            recommendation_sum += ((new Date().getTime())-start_recommendation);
-            if(recommendation_counter == 100){
-                console.log("recommendation - counter: "+recommendation_counter+" - sum: "+recommendation_sum+" - avg: "+recommendation_sum/recommendation_counter);
-            }
+            bench_callback_r();
         });
     }
 
