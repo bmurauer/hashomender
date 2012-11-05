@@ -40,7 +40,7 @@ function bench_callback_r(){
 	r_count++;
 	if(benchmarkRuns < tries){
 		benchmark_r();
-	} else {
+	} else if (benchmarkRuns < 2*tries){
 		console.log("r finished. sum:"+r_sum+" count:"+r_count+" avg:"+r_sum/r_count);
 		benchmark_a();
 	}
