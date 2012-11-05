@@ -105,7 +105,6 @@ function parseToJSON($input, $output, $limit = 0) {
             $output = array();
 
             $tweet = json_decode($buffer);
-            print_r($tweet);
             // some lines may be faulty
             if (!isset($tweet)) {
                 continue;
