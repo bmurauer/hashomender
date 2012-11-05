@@ -1,5 +1,5 @@
 var tries = 100;
-var benchmarkRuns = 0;
+var benchmarkRuns = 3*tries;
 var start_a = new Date().getTime();
 var start_r = new Date().getTime();
 
