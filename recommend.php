@@ -41,7 +41,7 @@ $filtered_tags = $filter->filterTags($sorted_tags);
 // print back result
 $end = microtime(true);
 $time = $end - $start;
-logTime($time);
+logTime($time*1000);
 print(json_encode($filtered_tags));
 
 
@@ -55,11 +55,11 @@ function checkInterfaces($elements, $interfaces){
 }
 
 function logTime($time){
-    $file = fopen(TIME_LOG_PATH, "w");
+    $file = fopen(TIME_LOG_PATH, "a");
     if(!$file){
         exit();
     }
-    fputs($file, $time);
+    fputs($file+"\n", $time);
     fclose($file);
 }
 ?>
