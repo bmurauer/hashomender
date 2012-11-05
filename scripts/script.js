@@ -267,6 +267,7 @@ function findRecommendedHashtags(e) {
                 set_error(msg[1]);
                 return;
             }
+            clear_error();
             // clear old entries
             tagList = [];
 		
@@ -445,4 +446,8 @@ $(document).ready(function(){
 function set_error(msg){
     $('#error').html(msg);
     $('#error').show();
+}
+
+function clear_error(){
+    $('#error').hide();
 }

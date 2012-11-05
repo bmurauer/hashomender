@@ -8,6 +8,7 @@
         <script type="text/javascript" src="scripts/jquery.js"></script>
         <script type="text/javascript" src="scripts/jquery-caret.js"></script>
         <script type="text/javascript" src="scripts/script.js"></script>
+        <script type="text/javascript" src="scripts/benchmark.js"></script>
     </head>
     <body>
         <div class="caption">
@@ -39,5 +40,6 @@
             <div id="tooltip">
             </div>
         </div>
+        <input type="button" value="benchmark" onClick="benchmark()"/>
     </body>
 </html>
