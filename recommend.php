@@ -60,7 +60,7 @@ function logTime($time){
         exit();
     }
     fputs($file, $time);
-    fputs($file, ';');
+    fputs($file, "\n");
     fclose($file);
 }
 ?>
