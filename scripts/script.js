@@ -246,9 +246,8 @@ function findRecommendedHashtags(e) {
             drawTooltip(lastw.length);
             autocompletion_counter++;
             autocompletion_sum += ((new Date().getTime()) - start_autocomplete );
-            if(++returnedRequests == 200){
-                console.log("average recommendation time: "+recommendation_sum/recommendation_count+" ms");
-                console.log("average autocompletion time: "+autocompletion_sum/autocompletion_count+" ms");            
+            if(autocompletion_counter == 100){
+                console.log("autocompletion - counter: "+autocompletion_counter+" - sum: "+autocompletion_sum+" - avg: "+autocompletion_sum/autocompletion_counter);
             }
         });
     } else {
@@ -285,6 +284,9 @@ function findRecommendedHashtags(e) {
             drawList();
             recommendation_counter++;
             recommendation_sum += ((new Date().getTime())-start_recommendation);
+            if(recommendation_counter == 100){
+                console.log("recommendation - counter: "+recommendation_counter+" - sum: "+recommendation_sum+" - avg: "+recommendation_sum/recommendation_counter);
+            }
         });
     }
 
@@ -416,8 +418,6 @@ function getTimeline(){
             }
 			
         });
-    console.log("AUTOCOMPLETION: "+ (autocomplete_time_value/autocomplete_time_counter));
-    console.log("RECOMMENDATION: "+ (recommendation_time_value/recommendation_time_counter));
 }
 function reply(i){
     var text = '@'+timeline[i].screen_name + ': ';
