@@ -26,6 +26,10 @@ class defaultExtractor implements iExtractor {
      */
     public function extractTags($tweets) {
         $tags = array();
+        if (isset($tweets->QTime)){
+          include_once('../time.php');
+          logTime($tweets->QTime, "Solr-Recommend");
+        }
         if (isset($tweets->response->docs)) {
             foreach ($tweets->response->docs as $tweet) {
                 $score = $tweet->score;
