@@ -1,4 +1,5 @@
 <?php
+$start = microtime();
 // sending back json, so we have to modify the headers.
 header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -40,6 +41,10 @@ $filtered_tags = $filter->filterTags($sorted_tags);
 // print back result
 print(json_encode($filtered_tags));
 
+$end = microtime();
+$time = $end - $start;
+log($time);
+
 function checkInterfaces($elements, $interfaces){
     for($i=0;$i<count($elements);$i++){
         if(!$elements[$i] instanceof $interfaces[$i]){
@@ -48,4 +53,14 @@ function checkInterfaces($elements, $interfaces){
         }
     }
 }
+
+function log($time){
+    $file = fopen(TIME_LOG_PATH, "w");
+    if(!$file){
+        exit();
+    }
+    fputs($file, $time);
+    fclose($file);
+}
 ?>
+

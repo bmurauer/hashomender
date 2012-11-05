@@ -73,6 +73,9 @@ define("AUTOCOMPLETE_TIMEOUT", 10);
  */
 define("AUTOCOMPLETE_FETCH_SIZE", 20);
 
+
+define("TIME_LOG_PATH", "/tmp/timelog.txt");
+
 $modules = array(
     'queryConstructor' => 'defaultQueryConstructor',
     'fetcher' => 'defaultFetcher',
