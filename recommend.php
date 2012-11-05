@@ -43,7 +43,7 @@ print(json_encode($filtered_tags));
 
 $end = microtime();
 $time = $end - $start;
-log($time);
+logTime($time);
 
 function checkInterfaces($elements, $interfaces){
     for($i=0;$i<count($elements);$i++){
@@ -54,7 +54,7 @@ function checkInterfaces($elements, $interfaces){
     }
 }
 
-function log($time){
+function logTime($time){
     $file = fopen(TIME_LOG_PATH, "w");
     if(!$file){
         exit();
