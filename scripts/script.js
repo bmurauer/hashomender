@@ -5,14 +5,14 @@ var selection = 0;
 var tagList;
 
 
-var recommendation_time_counter = 0;
-var recommendation_time_value = 0;
+var recommendation_counter = 0;
+var recommendation_sum = 0;
 
 var autocompleteList;
 var autocompleteSelection = 0;
 
-var autocomplete_time_counter = 0;
-var autocomplete_time_value = 0;
+var autocompletion_counter = 0;
+var autocompletion_sum = 0;
 
 
 var mode;
@@ -243,8 +243,12 @@ function findRecommendedHashtags(e) {
             if(!tooltip)
                 autocompleteSelection = 0;
             drawTooltip(lastw.length);
-            autocomplete_time_counter++;
-            autocomplete_time_value += ((new Date().getTime()) - start_autocomplete );
+            autocompletion_counter++;
+            autocompletion_sum += ((new Date().getTime()) - start_autocomplete );
+            if(++returnedRequests == 200){
+                console.log("average recommendation time: "+recommendation_sum/recommendation_count+" ms");
+                console.log("average autocompletion time: "+autocompletion_sum/autocompletion_count+" ms");            
+            }
         });
     } else {
         hideTooltip();
@@ -278,8 +282,8 @@ function findRecommendedHashtags(e) {
             selection = 0;
             $('#text').focus();
             drawList();
-            recommendation_time_counter++;
-            recommendation_time_value += ((new Date().getTime())-start_recommendation);
+            recommendation_counter++;
+            recommendation_sum += ((new Date().getTime())-start_recommendation);
         });
     }
 
