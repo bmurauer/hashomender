@@ -141,9 +141,10 @@ function insertTagIntoText(tag){
 
     // check if we are inserting a recommendation or an autocompletion. in the
     // latter case, we should complete the word rather than replace it
-    var lastw = selectedWord(old_tweet);
+    var sWord = selectedWord(old_tweet);
+	var lWord = lastWord(old_tweet);
     var new_tweet = '';
-    if(lastw.charAt(0) == '#'){
+    if(sWord.charAt(0) == '#'){
         new_tweet = autocompleteTag(tag);
     } else {
         // this value will be -1 if the tag is not contained in the text.
@@ -152,6 +153,7 @@ function insertTagIntoText(tag){
             .toLowerCase());
         var tag_length = tag.length;
         new_tweet = "";
+		
 	
         // the tag is already contained in the tweet, with a hashtag.
         if( old_tweet.toLowerCase().indexOf(tag.toLowerCase()) !== -1){
@@ -164,19 +166,33 @@ function insertTagIntoText(tag){
             new_tweet += old_tweet.substring(tag_position + tag_length);
         // tag was not found, append it to tweet
         } else {
-            new_tweet = old_tweet;
-            var length = old_tweet.length;
-            if(old_tweet.charAt(length-1) != ' '){
-                new_tweet += ' ';
-            } 
-            new_tweet += tag + " ";
-    }	
+			console.log("tag: "+tag.substr(1).substring(0, lWord.length)+" - lWord: "+lWord);
+			// the word currently written is the beginning of the selected
+			// hashtag, only use if no space is inserted at the time
+			if(lWord.length > 0 && 
+				tag.substr(1).substring(0,lWord.length).toLowerCase() == lWord.toLowerCase()){
+				new_tweet = (remove_last_word(old_tweet) + " " + tag).trim() + " ";
+			} else {
+            	new_tweet = old_tweet;
+            	var length = old_tweet.length;
+            	if(old_tweet.charAt(length-1) != ' '){
+            	    new_tweet += ' ';
+            	} 
+            	new_tweet += tag + " ";
+			}
+	    }
+
     }
     var pos = $('#text').val().length;
     $('#text').setCursorPosition(pos);
     $('#text').val(new_tweet);
     calcLength();
     findRecommendedHashtags();
+}
+
+function remove_last_word(text){
+	var index = text.trim().lastIndexOf(" ");
+	return text.substring(0,index);
 }
 
 function drawList(){
@@ -381,13 +397,14 @@ function getTimeline(){
             for(var i=0;i<response.length;i++){
                 var reg_exUrl = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/;
                 var linked = response[i].text.replace(reg_exUrl, function(url){
-                    return '<a href="'+url+'">'+url+'</a>';
+                    return '<a href="'+url+'" target="_blank">'+url+'</a>';
                 });
                 $('#timeline').append(
                     '<div class="past-tweet">'
+					+ '<div class="timeline-user">'
                     + '<img src="'+response[i].image+'"/>'
                     + '<div class="date">'+response[i].date+'</div>'
-                    +'<div class="timeline-user">'+response[i].name+'</div>'
+                    +response[i].name+'</div><br>'
                     +linked+'<br>'
                     +'<input type="submit" class="button" value="Retweet" onClick="retweet('+i+');"/>'
                     +'<input type="submit" class="button" value="Reply" onClick="reply('+i+');"/></div>');
