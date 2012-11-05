@@ -1,5 +1,5 @@
 <?php
-$start = microtime();
+$start = microtime(true);
 // sending back json, so we have to modify the headers.
 header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -39,11 +39,11 @@ $filtered_tags = $filter->filterTags($sorted_tags);
 
 
 // print back result
-print(json_encode($filtered_tags));
-
-$end = microtime();
+$end = microtime(true);
 $time = $end - $start;
 logTime($time);
+print(json_encode($filtered_tags));
+
 
 function checkInterfaces($elements, $interfaces){
     for($i=0;$i<count($elements);$i++){
