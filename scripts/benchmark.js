@@ -54,5 +54,6 @@ function bench_callback_a(){
 		benchmark_a();
 	} else {
 		console.log("a finished: "+a_sum/a_count);
+		benchmarkRuns = 3*tries;
 	}
 }
