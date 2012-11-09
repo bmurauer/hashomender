@@ -5,6 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf8">
         <title>Twitter Client with automatic Hashtag recommodation</title>
         <link rel="stylesheet" type="text/css" href="styles/style.css" />
+        <link rel="icon" href="images/favicon.ico" type="image/x-icon">
         <script type="text/javascript" src="scripts/jquery.js"></script>
         <script type="text/javascript" src="scripts/jquery-caret.js"></script>
         <script type="text/javascript" src="scripts/script.js"></script>
@@ -12,7 +13,7 @@
     </head>
     <body>
         <div class="caption">
-            <h1>Hash-O-Mender</h1>
+            <img src="images/header.png"/>
             <div class="username">
             logged in as: <?php echo $user->screen_name; ?>|
             <a href="logout.php" tabindex="-2">logout</a>

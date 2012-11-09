@@ -12,6 +12,9 @@ body{
     text-align: center;
     color: #666;
 }
+.caption img{
+    margin-bottom: 15px;
+}
 #submit{
     float:right;
     margin-right: 9px;
