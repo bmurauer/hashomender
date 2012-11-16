@@ -41,6 +41,6 @@
             <div id="tooltip">
             </div>
         </div>
-        <input type="button" value="benchmark" onClick="benchmarkRuns=0; benchmark_r()"/>
+        <!--<input type="button" value="benchmark" onClick="benchmarkRuns=0; benchmark_r()"/>-->
     </body>
 </html>
