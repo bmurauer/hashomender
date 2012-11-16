@@ -389,7 +389,7 @@ function getTimeline(){
             for(var i=0;i<response.length;i++){
                 var reg_exUrl = /(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/;
                 var linked = response[i].text.replace(reg_exUrl, function(url){
-                    return '<a href="'+url+'" target="_blank">'+url+'</a>';
+                    return '<a href="'+url+'" target="_blank" tabindex="-1">'+url+'</a>';
                 });
                 $('#timeline').append(
                     '<div class="past-tweet">'
@@ -398,8 +398,8 @@ function getTimeline(){
                     + '<div class="date">'+response[i].date+'</div>'
                     +response[i].name+'</div><br>'
                     +linked+'<br>'
-                    +'<input type="submit" class="button" value="Retweet" onClick="retweet('+i+');"/>'
-                    +'<input type="submit" class="button" value="Reply" onClick="reply('+i+');"/></div>');
+                    +'<input type="submit" class="button" value="Retweet" onClick="retweet('+i+');" tabindex="-1"/>'
+                    +'<input type="submit" class="button" value="Reply" onClick="reply('+i+');" tabindex="-1"/></div>');
             }
 			
         });
