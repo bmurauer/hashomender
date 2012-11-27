@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html tabindex="-1">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf8">
         <title>Twitter Client with automatic Hashtag recommodation</title>
@@ -11,11 +11,11 @@
         <script type="text/javascript" src="scripts/script.js"></script>
         <script type="text/javascript" src="scripts/benchmark.js"></script>
     </head>
-    <body>
+    <body tabindex="-1">
         <div class="caption">
             <img src="images/header.png"/>
             <div class="username">
-            logged in as: <?php echo $user->screen_name; ?>|
+            logged in as: <?php echo $user->screen_name; ?>&nbsp;|
             <a href="logout.php" tabindex="-2">logout</a>
         </div>
         <div id="error"></div>
@@ -33,8 +33,8 @@
                 <div id="list" tabindex="2">
                 </div>
             </div>
-            <div id="timeline"></div>
-            <div id="timeline-refresh"><img src="images/refresh.png" onClick="getTimeline();"/></div>
+            <div id="timeline" tabindex="-1"></div>
+            <div id="timeline-refresh" tabindex="-1"><img src="images/refresh.png" onClick="getTimeline();"/></div>
         </div>
         <div id="tooltip-wrapper">
             <img src="images/arrow.png"/>

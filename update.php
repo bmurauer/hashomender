@@ -30,7 +30,7 @@ if(!file_exists($tmp_file)){
 
 $log = array();
 $cmd = "curl 'http://localhost:8983/solr/update/json?commit=true' --data-binary @$tmp_file -H 'Content-type:application/json'";
-//exec($cmd,$log);
+exec($cmd,$log);
 $last = $log[count($log)-1];
 
 // if the operation is successful, a xml file will be returned that ends with

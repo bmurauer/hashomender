@@ -15,7 +15,7 @@ $Twitter = new EpiTwitter(CONSUMER_KEY, CONSUMER_SECRET);
 	</head>
 	<body>
 	<div class="caption">
-		<h1>Hash-O-Mender</h1>
+		<img src="images/header.png"/>
 	</div>
 	<div class="wrapper-start">
 		You don't seem to have logged in yet. Do you want to do so now?
